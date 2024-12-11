@@ -1,0 +1,159 @@
+---
+  - name: Set hostname
+    hostname:
+      name: "{{ inventory_hostname }}"
+
+  - name: Remove rescue images
+    file: path={{ item }} state=absent
+    loop: "{{ query('fileglob', '/boot/*rescue*') | sort }}"
+
+  - name: Configure console
+    copy:
+      dest: /etc/vconsole.conf
+      content: |
+        KEYMAP="{{ console_keymap }}"
+        FONT="{{ console_font }}"
+
+  - name: Configure locale
+    copy:
+      dest: /etc/locale.conf
+      content: |
+        LANG="{{ system_locale }}"
+
+  - name: Set timezone
+    timezone: name="{{ system_timezone }}"
+
+  - name: Remove unhelpful packages
+    package: name={{ item }} state=absent
+    with_items:
+      - "abrt*"
+      - language-pack-gnome-en
+    ignore_errors: true
+
+  - name: Uninstall packages
+    package: name={{ item }} state=absent
+    with_items:
+      - motd-news-config
+      - command-not-found
+      - update-notifier-common
+    ignore_errors: true
+
+  - name: Install helpful packages
+    package: name={{ item }} state=present
+    with_items:
+      - bash-completion
+      - bc
+      - sysstat
+      - tmux
+      - curl
+      - ansible
+      - util-linux
+      - tuned
+      - cmake
+      - mc
+      - pipx
+      - nmap
+      - tar
+      - lz4
+      - unzip
+      - rsync
+      - net-tools
+      - joe
+      - make
+      - wget
+      - git
+      - mailutils
+      - aptitude
+      - libcurl4-openssl-dev
+      - jq
+      - mlocate
+      - apt-config-auto-update
+      - landscape-common
+      - popularity-contest
+      - software-properties-common
+
+    ignore_errors: true
+
+  - name: Enable helpful services
+    service: name={{ item }} enabled=yes state=started
+    with_items:
+      - tuned
+      - fstrim.timer
+      - firewalld
+    ignore_errors: true
+
+  - name: Change root shell
+    user: name=root shell={{ root_shell }}
+
+  - name: Cleaning up
+    file: path={{ item }} state=absent
+    with_items:
+      - /root/.cache
+      - /root/.lesshst
+      - /root/.rnd
+      - /root/anaconda-ks.cfg
+      - /root/setup.retry
+      - /var/tmp/abrt
+
+  - name: Set tuned profile to throughput-performance
+    shell: /usr/sbin/tuned-adm profile throughput-performance
+
+  - name: Check if platform is Virtual
+    lineinfile:
+      dest: /sys/devices/virtual/dmi/id/sys_vendor
+      line: "QEMU"
+    check_mode: yes
+    register: virtual
+    failed_when: (virtual is changed) or (virtual is failed)
+    ignore_errors: true
+
+  - name: Check if platform is Physical
+    set_fact:
+      physical: true
+      virtual: false
+    when: virtual is changed
+
+  - name: Set fact for Virtual
+    set_fact:
+      physical: false
+      virtual: true
+    when: virtual
+
+  - name: Get system Chassis
+    shell: hostnamectl status | grep Chassis | cut -f2 -d ":" | tr -d ' '
+    register: chassis
+
+  - name: Workaround Proliant
+    lineinfile:
+      dest: /sys/devices/virtual/dmi/id/product_name
+      line: "ProLiant"
+    check_mode: yes
+    register: proliant
+    failed_when: (proliant is changed) or (proliant is failed)
+    ignore_errors: true
+
+  - name: Set Server facts
+    set_fact:
+      physical: true
+      virtual: false
+      chassis: "server"
+    when: proliant
+
+# - name: Set tuned profile for VM's
+#   shell: /usr/sbin/tuned-adm profile virtual-guest
+#   when: virtual
+
+# - name: Set tuned profile for desktop
+#   shell: /usr/sbin/tuned-adm profile desktop
+#   when: chassis == 'desktop' or chassis == 'laptop'
+
+# - name: Set tuned profile for server
+#   shell: /usr/sbin/tuned-adm profile virtual-host
+#   when: chassis == 'server'
+
+  - name: Limit Journal file size
+    ini_file:
+      path: /etc/systemd/journald.conf
+      section: Journal
+      option: SystemMaxUse
+      value: 200M

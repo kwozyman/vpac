@@ -1,0 +1,22 @@
+---
+  - name: Remove rescue images
+    file: path={{ item }} state=absent
+    loop: "{{ query('fileglob', '/boot/*rescue*') | sort }}"
+
+  - name: Uninstall packages
+    package: name={{ item }} state=absent
+    with_items:
+      - motd-news-config
+      - command-not-found
+      - update-notifier-common
+    ignore_errors: true
+
+  - name: Cleaning up
+    file: path={{ item }} state=absent
+    with_items:
+      - /root/.cache
+      - /root/.lesshst
+      - /root/.rnd
+      - /root/anaconda-ks.cfg
+      - /root/setup.retry
+      - /var/tmp/abrt

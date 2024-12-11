@@ -1,0 +1,5 @@
+---
+  - name: Set MAILTO for crontab jobs
+    cronvar:
+      name: MAILTO
+      value: "{{ notifications }}"

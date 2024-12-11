@@ -1,0 +1,7 @@
+---
+  - name: Set maximum number of open files
+    pam_limits:
+      domain: "*"
+      limit_type: "-"
+      limit_item: nofile
+      value: unlimited
