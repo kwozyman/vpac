@@ -12,13 +12,6 @@
         - key: "{{ sshkey }}"
 
     tasks:
-      - name: Include base tasks
-        include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/base/*.yaml') | sort }}"
-
-      - name: Flush handlers
-        meta: flush_handlers
-
       - name: Include vpac tasks
         include_tasks: "{{item}}"
         loop: "{{ query('fileglob', 'tasks/vpac/*.yaml') | sort }}"

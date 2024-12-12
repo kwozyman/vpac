@@ -1,0 +1,6 @@
+---
+  - name: Install helpful packages
+    package: name={{ item }} state=present
+    with_items:
+      - intel-cmt-cat
+    ignore_errors: true
