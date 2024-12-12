@@ -24,8 +24,7 @@ RUN mkdir -p /root/vpac/ || echo Exists
 
 ADD . /root/vpac/
 
-RUN ansible-playbook --connection=local -i localhost, /root/vpac/vpac.yaml || echo "Some failures appeared"
-
+RUN ansible-playbook --connection=local -i localhost, /root/vpac/setup.yaml || echo "Some failures appeared"
 
 # Setup /usr/lib/containers/storage as an additional store for images.
 # Remove once the base images have this set by default.

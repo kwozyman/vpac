@@ -47,6 +47,7 @@
       - tmux
       - curl
       - ansible
+      - cronie
       - util-linux
       - tuned
       - cmake
@@ -97,6 +98,7 @@
 
   - name: Set tuned profile to throughput-performance
     shell: /usr/sbin/tuned-adm profile throughput-performance
+    ignore_errors: true
 
   - name: Check if platform is Virtual
     lineinfile:

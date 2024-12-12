@@ -21,6 +21,7 @@
       exclusive: no
     with_items:
       - "{{ users }}"
+    ignore_errors: true
 
   - name: Disable root login over ssh with password
     lineinfile:
