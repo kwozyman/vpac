@@ -4,6 +4,8 @@
 
 if [[ $1 == "" ]]; then
     TARGETHOST="root@r450-n45-u16.pool.se-lab.eng.rdu2.dc.redhat.com"
+elif [[ $1 == "kalki" ]]; then
+    TARGETHOST="kalkitech"
 else
     TARGETHOST="$1"
 fi
