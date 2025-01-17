@@ -1,0 +1,14 @@
+---
+  - name: Install helpful packages
+    package: name={{ item }} state=present
+    with_items:
+      - libvirt-daemon
+      - qemu-kvm
+      - libvirt-client-qemu
+    ignore_errors: true
+
+  - name: Enable service
+    service: name={{ item }} enabled=yes state=started
+    with_items:
+      - libvirtd
+    ignore_errors: true
