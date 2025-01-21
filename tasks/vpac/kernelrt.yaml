@@ -1,4 +1,8 @@
 ---
+  - name: Enable RT repo
+    shell: subscription-manager repos --enable rhel-9-for-x86_64-rt-rpms
+    ignore_errors: true
+
   - name: Install Kernel RT
     package: name={{ item }} state=present
     with_items:
