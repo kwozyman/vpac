@@ -11,6 +11,7 @@ all:
 
     users:
       - iranzo
+      - kwozyman
 
     gitrepos: []
     os: redhat
