@@ -9,7 +9,7 @@
 
     block:
       - name: Check if bridge already exists
-        command: nmcli connection show br0
+        command: nmcli connection show bridge-br0
         ignore_errors: yes
         register: bridge_checkbr0
 
@@ -24,29 +24,33 @@
           | length > 0
 
       - name: Add interfacesbr0 to bridge
-        command: nmcli connection add type bridge-slave ifname {{ item.ifname }} master br0
+        command: nmcli connection add type bridge-slave ifname {{ item }} master br0
         with_items: "{{ interfacesbr0 }}"
         when: interfacesbr0 is defined and interfacesbr0 | length > 0
 
       - name: Set bridge up
-        command: nmcli connection up br0
+        command: nmcli connection up bridge-br0
         when: interfacesbr0 is defined and interfacesbr0 | length > 0
 
       - name: Make interfacesbr0 persistent
-        command: nmcli connection modify {{ item.ifname }} connection.autoconnect yes
+        command: nmcli connection modify {{ item }} connection.autoconnect yes
         with_items: "{{ interfacesbr0 }}"
         when: interfacesbr0 is defined and interfacesbr0 | length > 0
+
+      - name: Make bridge-br0 persistent
+        command: nmcli connection modify bridge-br0 connection.autoconnect yes
+        when: interfacesbr0 is defined and  interfacesbr0 | length > 0
 
   - name: Create bridge from defined interfacesbr1
     block:
       - name: Check if bridge already exists
-        command: nmcli connection show br1
+        command: nmcli connection show bridge-br1
         ignore_errors: yes
         register: bridge_checkbr1
 
       - name: Create bridge if it does not exist
         command: nmcli connection add type bridge ifname br1
-        when: bridge_checkbr1.rc != 0 and interfacesbr1        is defined and interfacesbr1 | length > 0
+        when: bridge_checkbr1.rc != 0 and interfacesbr1  is defined and interfacesbr1 | length > 0
 
       - name: Move interface configuration to bridge
         command: nmcli connection modify br1 +ipv4.addresses {{ item.ipv4_address }} +ipv4.gateway {{ item.ipv4_gateway }} +ipv4.dns {{ item.ipv4_dns }}
@@ -55,15 +59,19 @@
           | length > 0
 
       - name: Add interfacesbr1 to bridge
-        command: nmcli connection add type bridge-slave ifname {{ item.ifname }} master br1
+        command: nmcli connection add type bridge-slave ifname {{ item }} master br1
         with_items: "{{ interfacesbr1 }}"
-        when: interfacesbr1        is defined and interfacesbr1 | length > 0
+        when: interfacesbr1  is defined and interfacesbr1 | length > 0
 
       - name: Set bridge up
-        command: nmcli connection up br1
-        when: interfacesbr1        is defined and  interfacesbr1 | length > 0
+        command: nmcli connection up bridge-br1
+        when: interfacesbr1  is defined and  interfacesbr1 | length > 0
 
       - name: Make interfacesbr1 persistent
-        command: nmcli connection modify {{ item.ifname }} connection.autoconnect yes
+        command: nmcli connection modify {{ item }} connection.autoconnect yes
         with_items: "{{ interfacesbr1 }}"
-        when: interfacesbr1        is defined and  interfacesbr1 | length > 0
+        when: interfacesbr1  is defined and  interfacesbr1 | length > 0
+
+      - name: Make bridge-br1 persistent
+        command: nmcli connection modify bridge-br1 connection.autoconnect yes
+        when: interfacesbr1  is defined and  interfacesbr1 | length > 0
