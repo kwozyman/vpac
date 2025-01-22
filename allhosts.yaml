@@ -20,6 +20,38 @@ all:
         options:
           - name: isolcpus
             value: 12-22
+          - name: irqaffinity
+            value: 8-11
+          - name: skew_tick
+            value: 1
+          - name: idle
+            value: poll
+          - name: nohz
+            value: on
+          - name: noht
+          - name: intel.max_cstate
+            value: 0
+          - name: intel_idle.max_cstate
+            value: 0
+          - name: processor.max_cstate
+            value: 0
+          - name: processor_idle.max_cstate
+            value: 0
+          - name: intel_pstate
+            value: disable
+          - name: rdt
+            value: cmt,l3_cat,l3_cdp,mba
+          - name: iomem
+            value: relaxed
+          - name: intel_iommu
+            value: on
+          - name: iommu
+            value: pt
+# do we want this??
+#          - name: selinux
+#            value: 0
+#          - name: audit
+#            value: 0
 
   children:
     target:
