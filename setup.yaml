@@ -29,12 +29,14 @@
         loop: "{{ query('fileglob', 'tasks/base/*.yaml') | sort }}"
 
 
-      - name: Flush handlers
-        meta: flush_handlers
-
       - name: Include vpac tasks
         include_tasks: "{{item}}"
         loop: "{{ query('fileglob', 'tasks/vpac/*.yaml') | sort }}"
+
+
+      - name: Include kalkitech specifics
+        include_tasks: "{{item}}"
+        loop: "{{ query('fileglob', 'tasks/kalkitech/*.yaml') | sort }}"
 
 
       - name: Flush handlers
