@@ -15,6 +15,11 @@ all:
 
     gitrepos: []
     os: redhat
+    bootloader_settings:
+      - kernel: ALL
+        options:
+          - name: isolcpus
+            value: 12-22
 
   children:
     target:

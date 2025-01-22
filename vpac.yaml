@@ -18,6 +18,9 @@
 
       - name: Flush handlers
         meta: flush_handlers
+    
+    roles:
+      - linux-system-roles.bootloader
 
     handlers:
       - name: Restart monit
