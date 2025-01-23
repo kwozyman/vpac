@@ -15,6 +15,14 @@ all:
 
     gitrepos: []
     os: redhat
+    timesync_ptp_domains:
+      - number: 0
+        interfaces: [enp6s0, enp9s0]
+    timesync_ntp_servers:
+      - hostname: 192.168.2.58
+        iburst: yes
+    timesync_ntp_provider: chrony
+
     bootloader_settings:
       - kernel: ALL
         options:
@@ -47,11 +55,11 @@ all:
             value: on
           - name: iommu
             value: pt
-# do we want this??
-#          - name: selinux
-#            value: 0
-#          - name: audit
-#            value: 0
+  # do we want this??
+  #          - name: selinux
+  #            value: 0
+  #          - name: audit
+  #            value: 0
 
   children:
     target:

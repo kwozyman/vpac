@@ -12,9 +12,9 @@
         - key: "{{ sshkey }}"
 
     tasks:
-      - name: Include Kalkitech tasks
+      - name: Include vpac tasks
         include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/kalkitech/*.yaml') | sort }}"
+        loop: "{{ query('fileglob', 'tasks/vpac/ptp.yaml') | sort }}"
 
       - name: Flush handlers
         meta: flush_handlers
