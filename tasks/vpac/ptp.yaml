@@ -33,7 +33,10 @@
             fi
           done < <(chronyc -c sources)
 
+          echo "$socket" "$PTP_STATUS_FILE"
+
           pmc -s "$socket" -b 0 -u "GET TIME_STATUS_NP" "GET PORT_DATA_SET" "GET PARENT_DATA_SET" > "$PTP_STATUS_FILE"
+
           sleep 1
         done
 
@@ -54,12 +57,50 @@
         Restart=always
         RestartSec=1
         #User=root
-        Environment=PTP_STATUS_FOLDER=/var/lib/libvirt/images/ptp/
-        Environment=PTP4L_SOCKET_PATH=/var/run/timemaster/ptp4l.<num>.socket
+        Environment=PTP_STATUS_FOLDER=/home/libvirt-local/ptp/
+        Environment=PTP4L_SOCKET_PATH=/var/run/timemaster/ptp4l.0.socket
         ExecStart=/usr/sbin/ptp_status.sh
 
         [Install]
         WantedBy=multi-user.target
+
+
+
+  - name: Deploy timemaster configuration
+    copy:
+      dest: /etc/timemaster.conf
+      content: |
+        [ptp_domain 0]
+        interfaces enp6s0
+
+        [timemaster]
+        ntp_program chronyd
+
+        [chrony.conf]
+        logchange 0.1
+        rtcsync
+        lock_all
+        sched_priority 60
+        combinelimit 0
+        driftfile /var/lib/chrony/drift
+        ntsdumpdir /var/lib/chrony
+
+        [ptp4l.conf]
+        step_threshold 1.0
+        network_transport L2
+        delay_mechanism P2P
+
+        [chronyd]
+        path /usr/sbin/chronyd
+
+        [phc2sys]
+        path /usr/sbin/phc2sys
+        options -l 6
+
+        [ptp4l]
+        path /usr/sbin/ptp4l
+        options -l 6
+
 
 
   - name: Enable PTP status serviice
