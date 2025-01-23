@@ -1,0 +1,9 @@
+---
+  - name: Ensure the system is set to runlevel 3
+    hosts: all
+    tasks:
+      - name: Set the default target to multi-user.target (runlevel 3)
+        command: systemctl set-default multi-user.target
+
+      - name: Ensure the multi-user.target is active
+        command: systemctl isolate multi-user.target
