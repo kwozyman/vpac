@@ -1,12 +1,10 @@
 ---
-
   - name: Install RHEL system roles packages
     dnf:
       name: "{{ item }}"
       state: present
     with_items:
       - rhel-system-roles
-
 
   - name: Deploy the ptp status shell script
     copy:
@@ -40,7 +38,6 @@
           sleep 1
         done
 
-
   - name: Deploy the ptp status service
     copy:
       dest: /etc/systemd/system/ptp_status.service
@@ -64,46 +61,15 @@
         [Install]
         WantedBy=multi-user.target
 
+  - name: Ensure the [ptp4l] section has the correct options value for autodetection
+    lineinfile:
+      path: /etc/timemaster.conf
+      regexp: "^options"
+      line: "options -l 6 -A"
+      insertafter: '^\[ptp4l\]$'
+    notify: Restart timemaster
 
-
-  - name: Deploy timemaster configuration
-    copy:
-      dest: /etc/timemaster.conf
-      content: |
-        [ptp_domain 0]
-        interfaces enp6s0
-
-        [timemaster]
-        ntp_program chronyd
-
-        [chrony.conf]
-        logchange 0.1
-        rtcsync
-        lock_all
-        sched_priority 60
-        combinelimit 0
-        driftfile /var/lib/chrony/drift
-        ntsdumpdir /var/lib/chrony
-
-        [ptp4l.conf]
-        step_threshold 1.0
-        network_transport L2
-        delay_mechanism P2P
-
-        [chronyd]
-        path /usr/sbin/chronyd
-
-        [phc2sys]
-        path /usr/sbin/phc2sys
-        options -l 6
-
-        [ptp4l]
-        path /usr/sbin/ptp4l
-        options -l 6
-
-
-
-  - name: Enable PTP status serviice
+  - name: Enable PTP status service
     service: name={{ item }} enabled=yes state=started
     with_items:
       - ptp_status
