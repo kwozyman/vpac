@@ -32,8 +32,12 @@ all:
         options:
           - name: isolcpus
             value: 12-22
+          - name: rcu_nocbs
+            value: 12-22
           - name: irqaffinity
             value: 8-11
+          - name: rcu_nocb_poll
+          - name: threadirqs
           - name: skew_tick
             value: 1
           - name: idle
