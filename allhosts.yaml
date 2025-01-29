@@ -59,6 +59,7 @@ all:
             value: on
           - name: iommu
             value: pt
+          # Missing: threadirqs, rcu_nocbs and rcu_nocb_poll
   # do we want this??
   #          - name: selinux
   #            value: 0

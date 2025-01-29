@@ -64,14 +64,8 @@
       - wget
       - git
       - mailutils
-      - aptitude
-      - libcurl4-openssl-dev
       - jq
       - mlocate
-      - apt-config-auto-update
-      - landscape-common
-      - popularity-contest
-      - software-properties-common
 
     ignore_errors: true
 
