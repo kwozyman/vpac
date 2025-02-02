@@ -1,67 +1,66 @@
 ---
-  - hosts: all
-    user: root
+- hosts: all
+  user: root
 
-    vars:
-      console_keymap: en
-      console_font: eurlatgr
-      system_locale: en_US.UTF-8
-      system_timezone: Europe/Madrid
-      root_shell: /bin/bash
-      domain: "{{ ansible_nodename.split('.')[1:] | join('.') }}"
-      keys:
-        - key: "{{ sshkey }}"
+  vars:
+    console_keymap: en
+    console_font: eurlatgr
+    system_locale: en_US.UTF-8
+    system_timezone: Europe/Madrid
+    root_shell: /bin/bash
+    domain: "{{ ansible_nodename.split('.')[1:] | join('.') }}"
+    keys:
+      - key: "{{ sshkey }}"
 
-      sshpassword: false
-      sshkeys:
-        - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8k6sAkPLWIUwov0YPLi3ex7WAw35MGZhXyC7Seyu9703wO436NBHOtRGFwl8gTbMR9k/WG0tPbNS42H06Zpi8vCB+ITftqBCWjlKOgOQKnvEiC73JhgounQPvjhj2r/JEvrPQ8QThHnBPLjFk5dGH9AORanEcNr9BBG/YXCgdcXAgZL9pQ+jhoy0JRnKhGpQLGzyMeuUYOfxcivXHKZFZzZ4fluSskx1Wm+Zw1Tzbhr/rTTvrlkQVmzxMlOjN/k02/CdEDjDG5G8Qb2QKsIqnZZy05snnfeN0B2u8uEhcfvW1IvKrRT/BXYlU3E7Rz7cboJlJ54eiKRlZXCQtXDYCfdJwHudaNtL5w31F4xOObdpCv3ANQb6Ravr0LG91liKMjaYCGNYkrP7S3v7D7gkpDyjNn7DYqgwCk2D/oU/NeuMZCB6PsBB2R2rXexq0EIgFw/bwabASQghCkV3JkOj5kIRvrQfFb3jZJDMEoELvAWLhGg08qvHg1leV3xm8+coobXiGqdmoGPCPATGb/4Evl1DR3mSrLYh88TAInCCDzivBSr+SLOl2BSpbwmJ0suIS3AIT04KeHJMpicOsOZE8SuDrngHTlCasZaoMF9ny6GiK3/jX7VJuTmYjtG7unZ5C7U7tT0jdMUcWOYezEhvLc1EmZtDSCYycxAC9s6oKdw=="
-        - "ssh-dss AAAAB3NzaC1kc3MAAACBAOtJLbwkT6ii+PwYncWN6mIoWEjQB9KaQvKVMp7IyDR7JIaT3Tp+Ir4eSb8PQ6Lz/RxsD59LuiSGTsCiBR5iX9T5EY4H1hLJFBjUk0Q/GT7XmRVW/bqwOSoimfj/2xQBMdeVB5pWImB92UrF3xHZpxOepVzg0z7GPSn9mISOeUo7AAAAFQDEeNOY0n6j2LuCBjMR7s863rugjQAAAIAQQT9uIleTSg8WN29Oq+TWT27Tz7SJgy84Ycv3qVZKgZKgW21g3BaGRaBMLYhgTqYxm/DVXTpbVrj2ac+GdcrzJuZjd7u2TROihLkJ2coY4HcL3HA4pvvbc4ShVcwfGOv3HRZRLb7aeXNuuyq7zN4Sj68ql6EvuNvON/DZLQ/ezwAAAIEA0E2920tpkCyMjoa8WoleQOvG7xToKp83XAj7Vkt5CjYD7fEtjcpVn7hdTc9+D+wBxUFSDZj2tGaayjuIrfbLxfA0RLGS7V5hkmiVFEUspeGOLzpm8iOPZQwiVKxGDUaPcRdPTD2pM6vwSyq9BV1yB9DT+gent3r0DkEbRKu2dbg="
-
-
-
-      gitrepos: []
-      os: redhat
-      rootpassword: "$y$j9T$TMc53M/8tTWL.g3.j9IcB0$8KM3pI6SOiuar/HeO/sRx/L9Fp9XIVKSUhqygjY7xo7"
-
-    tasks:
-      - name: Include vpac tasks
-        include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/vpac/*.yaml') | sort }}"
+    sshpassword: false
+    sshkeys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8k6sAkPLWIUwov0YPLi3ex7WAw35MGZhXyC7Seyu9703wO436NBHOtRGFwl8gTbMR9k/WG0tPbNS42H06Zpi8vCB+ITftqBCWjlKOgOQKnvEiC73JhgounQPvjhj2r/JEvrPQ8QThHnBPLjFk5dGH9AORanEcNr9BBG/YXCgdcXAgZL9pQ+jhoy0JRnKhGpQLGzyMeuUYOfxcivXHKZFZzZ4fluSskx1Wm+Zw1Tzbhr/rTTvrlkQVmzxMlOjN/k02/CdEDjDG5G8Qb2QKsIqnZZy05snnfeN0B2u8uEhcfvW1IvKrRT/BXYlU3E7Rz7cboJlJ54eiKRlZXCQtXDYCfdJwHudaNtL5w31F4xOObdpCv3ANQb6Ravr0LG91liKMjaYCGNYkrP7S3v7D7gkpDyjNn7DYqgwCk2D/oU/NeuMZCB6PsBB2R2rXexq0EIgFw/bwabASQghCkV3JkOj5kIRvrQfFb3jZJDMEoELvAWLhGg08qvHg1leV3xm8+coobXiGqdmoGPCPATGb/4Evl1DR3mSrLYh88TAInCCDzivBSr+SLOl2BSpbwmJ0suIS3AIT04KeHJMpicOsOZE8SuDrngHTlCasZaoMF9ny6GiK3/jX7VJuTmYjtG7unZ5C7U7tT0jdMUcWOYezEhvLc1EmZtDSCYycxAC9s6oKdw=="
+      - "ssh-dss AAAAB3NzaC1kc3MAAACBAOtJLbwkT6ii+PwYncWN6mIoWEjQB9KaQvKVMp7IyDR7JIaT3Tp+Ir4eSb8PQ6Lz/RxsD59LuiSGTsCiBR5iX9T5EY4H1hLJFBjUk0Q/GT7XmRVW/bqwOSoimfj/2xQBMdeVB5pWImB92UrF3xHZpxOepVzg0z7GPSn9mISOeUo7AAAAFQDEeNOY0n6j2LuCBjMR7s863rugjQAAAIAQQT9uIleTSg8WN29Oq+TWT27Tz7SJgy84Ycv3qVZKgZKgW21g3BaGRaBMLYhgTqYxm/DVXTpbVrj2ac+GdcrzJuZjd7u2TROihLkJ2coY4HcL3HA4pvvbc4ShVcwfGOv3HRZRLb7aeXNuuyq7zN4Sj68ql6EvuNvON/DZLQ/ezwAAAIEA0E2920tpkCyMjoa8WoleQOvG7xToKp83XAj7Vkt5CjYD7fEtjcpVn7hdTc9+D+wBxUFSDZj2tGaayjuIrfbLxfA0RLGS7V5hkmiVFEUspeGOLzpm8iOPZQwiVKxGDUaPcRdPTD2pM6vwSyq9BV1yB9DT+gent3r0DkEbRKu2dbg="
 
 
-      - name: Include kalkitech specifics
-        include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/kalkitech/*.yaml') | sort }}"
+    gitrepos: []
+    os: redhat
+    rootpassword: "$y$j9T$TMc53M/8tTWL.g3.j9IcB0$8KM3pI6SOiuar/HeO/sRx/L9Fp9XIVKSUhqygjY7xo7"
+
+  tasks:
+    - name: Include vpac tasks
+      include_tasks: "{{item}}"
+      loop: "{{ query('fileglob', 'tasks/vpac/*.yaml') | sort }}"
 
 
-      - name: Flush handlers
-        meta: flush_handlers
+    - name: Include kalkitech specifics
+      include_tasks: "{{item}}"
+      loop: "{{ query('fileglob', 'tasks/kalkitech/*.yaml') | sort }}"
 
-    roles:
-      - base
-      - linux-system-roles.bootloader
-      - linux-system-roles.timesync
 
-    handlers:
-      - name: Restart monit
-        service:
-          name: monit
-          state: restarted
-        when: monit
-        ignore_errors: true
+    - name: Flush handlers
+      meta: flush_handlers
 
-      - name: Restart systemd
-        shell: systemctl daemon-reload
-        ignore_errors: true
+  roles:
+    - base
+    - linux-system-roles.bootloader
+    - linux-system-roles.timesync
 
-      - name: Restart sshd
-        service:
-          name: sshd
-          state: restarted
-        ignore_errors: true
+  handlers:
+    - name: Restart monit
+      service:
+        name: monit
+        state: restarted
+      when: monit
+      ignore_errors: true
 
-      - name: Restart systemd-journald
-        service:
-          name: systemd-journald
-          state: restarted
-        ignore_errors: true
+    - name: Restart systemd
+      shell: systemctl daemon-reload
+      ignore_errors: true
+
+    - name: Restart sshd
+      service:
+        name: sshd
+        state: restarted
+      ignore_errors: true
+
+    - name: Restart systemd-journald
+      service:
+        name: systemd-journald
+        state: restarted
+      ignore_errors: true
