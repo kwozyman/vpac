@@ -23,11 +23,6 @@
     rootpassword: "$y$j9T$TMc53M/8tTWL.g3.j9IcB0$8KM3pI6SOiuar/HeO/sRx/L9Fp9XIVKSUhqygjY7xo7"
 
   tasks:
-    - name: Include vpac tasks
-      include_tasks: "{{item}}"
-      loop: "{{ query('fileglob', 'tasks/vpac/*.yaml') | sort }}"
-
-
     - name: Include kalkitech specifics
       include_tasks: "{{item}}"
       loop: "{{ query('fileglob', 'tasks/kalkitech/*.yaml') | sort }}"
@@ -38,6 +33,7 @@
 
   roles:
     - base
+    - vpac
     - linux-system-roles.bootloader
     - linux-system-roles.timesync
 
