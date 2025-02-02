@@ -1,0 +1,16 @@
+---
+- name: Include base tasks
+  include_tasks: "{{ item }}"
+  loop:
+    - 00_sshkeyscopy.yaml
+    - base.yaml
+    - chrony.yaml
+    - cleanup.yaml
+    - cronpath.yaml
+    - dnf.yaml
+    - logs.yaml
+    - runlevel.yaml
+    - ssh.yaml
+    - sshkeys.yaml
+    - syslog.yaml
+    - systemd-nokill.yaml

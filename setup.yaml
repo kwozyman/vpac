@@ -24,11 +24,6 @@
       rootpassword: "$y$j9T$TMc53M/8tTWL.g3.j9IcB0$8KM3pI6SOiuar/HeO/sRx/L9Fp9XIVKSUhqygjY7xo7"
 
     tasks:
-      - name: Include base tasks
-        include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/base/*.yaml') | sort }}"
-
-
       - name: Include vpac tasks
         include_tasks: "{{item}}"
         loop: "{{ query('fileglob', 'tasks/vpac/*.yaml') | sort }}"
@@ -43,8 +38,9 @@
         meta: flush_handlers
 
     roles:
+      - base
       - linux-system-roles.bootloader
-      - rhel-system-roles.timesync
+      - linux-system-roles.timesync
 
     handlers:
       - name: Restart monit
