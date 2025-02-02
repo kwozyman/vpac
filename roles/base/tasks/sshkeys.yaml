@@ -13,15 +13,6 @@
       key: "{{ item }}"
     with_items: "{{ sshkeys }}"
 
-  - name: get github key(s) and update the authorized_keys file
-    authorized_key:
-      user: "root"
-      key: "https://github.com/{{ item }}.keys"
-      state: present
-      exclusive: no
-    with_items:
-      - "{{ users }}"
-
   - name: Disable root login over ssh with password
     lineinfile:
       dest: /etc/ssh/sshd_config
