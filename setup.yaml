@@ -23,17 +23,13 @@
     rootpassword: "$y$j9T$TMc53M/8tTWL.g3.j9IcB0$8KM3pI6SOiuar/HeO/sRx/L9Fp9XIVKSUhqygjY7xo7"
 
   tasks:
-    - name: Include kalkitech specifics
-      include_tasks: "{{item}}"
-      loop: "{{ query('fileglob', 'tasks/kalkitech/*.yaml') | sort }}"
-
-
     - name: Flush handlers
       meta: flush_handlers
 
   roles:
     - base
     - vpac
+    - network
     - linux-system-roles.bootloader
     - linux-system-roles.timesync
 
