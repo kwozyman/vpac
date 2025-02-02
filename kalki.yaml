@@ -12,16 +12,13 @@
         - key: "{{ sshkey }}"
 
     tasks:
-      - name: Include Kalkitech tasks
-        include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/kalkitech/*.yaml') | sort }}"
-
       - name: Flush handlers
         meta: flush_handlers
 
     roles:
       - linux-system-roles.bootloader
       - rhel-system-roles.timesync
+      - network
 
     handlers:
       - name: Restart monit

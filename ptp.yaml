@@ -12,16 +12,13 @@
         - key: "{{ sshkey }}"
 
     tasks:
-      - name: Include vpac tasks
-        include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/vpac/ptp.yaml') | sort }}"
-
       - name: Flush handlers
         meta: flush_handlers
 
     roles:
       - linux-system-roles.bootloader
       - rhel-system-roles.timesync
+      - vpac
 
     handlers:
       - name: Restart monit
