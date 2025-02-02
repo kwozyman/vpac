@@ -1,12 +1,12 @@
 ---
 - name: Install bridge-utils
-  package: name={{ item }} state=present
+  ansible.builtin.package: name={{ item }} state=present
   with_items:
     - bridge-utils
   ignore_errors: true
 
 - name: Create bridge definition script for process
-  copy:
+  ansible.builtin.copy:
     dest: /root/process-net.sh
     mode: 0755
     content: |
@@ -19,7 +19,7 @@
       nmcli connection up process-ext
 
 - name: Create bridge definition script for station
-  copy:
+  ansible.builtin.copy:
     dest: /root/station-net.sh
     mode: 0755
     content: |
@@ -34,7 +34,7 @@
       nmcli connection up station-ext
 
 - name: Execute bridge creation script for process
-  shell: /root/process-net.sh
+  ansible.builtin.shell: /root/process-net.sh
 
 - name: Execute bridge creation script for station
-  shell: /root/station-net.sh
+  ansible.builtin.shell: /root/station-net.sh

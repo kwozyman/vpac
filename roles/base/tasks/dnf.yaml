@@ -1,24 +1,24 @@
 ---
-  - name: Use DNF fastest mirror
-    ini_file:
-      path: /etc/dnf/dnf.conf
-      section: main
-      option: fastestmirror
-      value: 1
-    when: os == "fedora"
+- name: Use DNF fastest mirror
+  community.general.ini_file:
+    path: /etc/dnf/dnf.conf
+    section: main
+    option: fastestmirror
+    value: 1
+  when: os == "fedora"
 
-  - name: Use DNF drpm
-    ini_file:
-      path: /etc/dnf/dnf.conf
-      section: main
-      option: deltarpm
-      value: true
-    when: os == "fedora"
+- name: Use DNF drpm
+  community.general.ini_file:
+    path: /etc/dnf/dnf.conf
+    section: main
+    option: deltarpm
+    value: true
+  when: os == "fedora"
 
-  - name: Use DNF parallel downloads
-    ini_file:
-      path: /etc/dnf/dnf.conf
-      section: main
-      option: max_parallel_downloads
-      value: 20
-    when: os == "fedora"
+- name: Use DNF parallel downloads
+  community.general.ini_file:
+    path: /etc/dnf/dnf.conf
+    section: main
+    option: max_parallel_downloads
+    value: 20
+  when: os == "fedora"

@@ -1,18 +1,18 @@
 ---
-  - name: Set number of hugepages
-    sysctl:
-      name: vm.nr_hugepages
-      value: 13312
-      state: present
+- name: Set number of hugepages
+  ansible.posix.sysctl:
+    name: vm.nr_hugepages
+    value: 13312
+    state: present
 
-  - name: Disable NMI watchdog
-    sysctl:
-      name: kernel.nmi_watchdog
-      value: 0
-      state: present
+- name: Disable NMI watchdog
+  ansible.posix.sysctl:
+    name: kernel.nmi_watchdog
+    value: 0
+    state: present
 
-  - name: Set rt runtime sched
-    sysctl:
-      name: kernel.sched_rt_runtime_us
-      value: -1
-      state: present
+- name: Set rt runtime sched
+  ansible.posix.sysctl:
+    name: kernel.sched_rt_runtime_us
+    value: -1
+    state: present

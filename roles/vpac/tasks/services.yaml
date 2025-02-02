@@ -1,10 +1,10 @@
 ---
-  - name: Disable latency peak services
-    service: name={{ item }} enabled=no state=stopped
-    with_items:
-      - pmie.service
-      - pmie_farm.service
-      - pmie_check.timer
-      - pmie_daily.timer
-      - pmie_farm_check.timer
-    ignore_errors: true
+- name: Disable latency peak services
+  ansible.builtin.service: name={{ item }} enabled=no state=stopped
+  with_items:
+    - pmie.service
+    - pmie_farm.service
+    - pmie_check.timer
+    - pmie_daily.timer
+    - pmie_farm_check.timer
+  ignore_errors: true

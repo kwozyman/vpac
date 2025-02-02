@@ -24,7 +24,7 @@
 
   tasks:
     - name: Flush handlers
-      meta: flush_handlers
+      ansible.builtin.meta: flush_handlers
 
   roles:
     - base
@@ -35,24 +35,24 @@
 
   handlers:
     - name: Restart monit
-      service:
+      ansible.builtin.service:
         name: monit
         state: restarted
       when: monit
       ignore_errors: true
 
     - name: Restart systemd
-      shell: systemctl daemon-reload
+      ansible.builtin.shell: systemctl daemon-reload
       ignore_errors: true
 
     - name: Restart sshd
-      service:
+      ansible.builtin.service:
         name: sshd
         state: restarted
       ignore_errors: true
 
     - name: Restart systemd-journald
-      service:
+      ansible.builtin.service:
         name: systemd-journald
         state: restarted
       ignore_errors: true

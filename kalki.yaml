@@ -1,41 +1,45 @@
 ---
-  - hosts: all
-    user: root
+- hosts: all
+  user: root
 
-    vars:
-      console_keymap: en
-      console_font: eurlatgr
-      system_locale: en_US.UTF-8
-      root_shell: /bin/bash
-      domain: "{{ ansible_nodename.split('.')[1:] | join('.') }}"
-      keys:
-        - key: "{{ sshkey }}"
+  vars:
+    console_keymap: en
+    console_font: eurlatgr
+    system_locale: en_US.UTF-8
+    root_shell: /bin/bash
+    domain: "{{ ansible_nodename.split('.')[1:] | join('.') }}"
+    keys:
+      - key: "{{ sshkey }}"
 
-    tasks:
-      - name: Flush handlers
-        meta: flush_handlers
+  tasks:
+    - name: Flush handlers
+      meta: flush_handlers
 
-    roles:
-      - linux-system-roles.bootloader
-      - rhel-system-roles.timesync
-      - network
+  roles:
+    - linux-system-roles.bootloader
+    - rhel-system-roles.timesync
+    - network
 
-    handlers:
-      - name: Restart monit
-        service:
-          name: monit
-          state: restarted
-        when: monit
+  handlers:
+    - name: Restart monit
+      ansible.builtin.service:
+        name: monit
+        state: restarted
+      when: monit
+      ignore_errors: true
 
-      - name: Restart systemd
-        shell: systemctl daemon-reload
+    - name: Restart systemd
+      ansible.builtin.shell: systemctl daemon-reload
+      ignore_errors: true
 
-      - name: Restart sshd
-        service:
-          name: sshd
-          state: restarted
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+      ignore_errors: true
 
-      - name: Restart systemd-journald
-        service:
-          name: systemd-journald
-          state: restarted
+    - name: Restart systemd-journald
+      ansible.builtin.service:
+        name: systemd-journald
+        state: restarted
+      ignore_errors: true
