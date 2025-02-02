@@ -1,6 +1,6 @@
 ---
 - name: Include base tasks
-  include_tasks: "{{ item }}"
+  ansible.builtin.include_tasks: "{{ item }}"
   loop:
     - 00_sshkeyscopy.yaml
     - base.yaml
