@@ -3,5 +3,5 @@
 Ansible prep:
 
 ```
-ansible-galaxy role install linux-system-roles.bootloader
+ansible-galaxy role install linux-system-roles.bootloader linux-system-roles.timesync
 ```
