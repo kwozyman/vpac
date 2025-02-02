@@ -12,14 +12,11 @@
         - key: "{{ sshkey }}"
 
     tasks:
-      - name: Include vpac tasks
-        include_tasks: "{{item}}"
-        loop: "{{ query('fileglob', 'tasks/vpac/*.yaml') | sort }}"
-
       - name: Flush handlers
         meta: flush_handlers
 
     roles:
+      - vpac
       - linux-system-roles.bootloader
 
     handlers:
