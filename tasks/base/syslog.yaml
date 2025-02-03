@@ -1,9 +1,0 @@
----
-  - name: Enable old-style syslog
-    ini_file:
-      path: /etc/systemd/journald.conf
-      section: Journal
-      option: Storage
-      value: persistent
-    notify:
-      - Restart systemd-journald

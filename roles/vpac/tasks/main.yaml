@@ -1,0 +1,10 @@
+---
+- name: Include VPAC tasks
+  ansible.builtin.include_tasks: "{{ item }}"
+  loop:
+    - intelcat.yaml
+    - kernelrt.yaml
+    - ptp.yaml
+    - services.yaml
+    - sysctl.yaml
+    - virtualization.yaml

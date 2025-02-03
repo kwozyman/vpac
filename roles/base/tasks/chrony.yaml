@@ -1,18 +1,18 @@
 ---
   - name: Install helpful packages
-    package: name={{ item }} state=present
+    ansible.builtin.package: name={{ item }} state=present
     with_items:
       - chrony
 
     ignore_errors: true
 
   - name: Enable helpful services
-    service: name={{ item }} enabled=yes state=started
+    ansible.builtin.service: name={{ item }} enabled=yes state=started
     with_items:
       - chrony
       - chronyd
     ignore_errors: true
 
   - name: Force time sync
-    shell: chronyc -a 'burst 4/4'
+    ansible.builtin.shell: chronyc -a 'burst 4/4'
     ignore_errors: true

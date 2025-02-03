@@ -1,10 +1,10 @@
 ---
   - name: Remove rescue images
-    file: path={{ item }} state=absent
+    ansible.builtin.file: path={{ item }} state=absent
     loop: "{{ query('fileglob', '/boot/*rescue*') | sort }}"
 
   - name: Uninstall packages
-    package: name={{ item }} state=absent
+    ansible.builtin.package: name={{ item }} state=absent
     with_items:
       - motd-news-config
       - command-not-found
@@ -12,7 +12,7 @@
     ignore_errors: true
 
   - name: Cleaning up
-    file: path={{ item }} state=absent
+    ansible.builtin.file: path={{ item }} state=absent
     with_items:
       - /root/.cache
       - /root/.lesshst
