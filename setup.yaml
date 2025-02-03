@@ -32,6 +32,7 @@
     - network
     - linux-system-roles.bootloader
     - linux-system-roles.timesync
+    - ssc600
 
   handlers:
     - name: Restart monit
