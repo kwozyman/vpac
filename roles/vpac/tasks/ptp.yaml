@@ -7,59 +7,22 @@
     - rhel-system-roles
 
 - name: Deploy the ptp status shell script
-  ansible.builtin.copy:
+  ansible.builtin.template:
     dest: /usr/sbin/ptp_status.sh
-    mode: 0755
+    src: ptp_status.sh
+    mode: u=rwx,g=rx,o=rx
     owner: root
     group: root
-    content: |
-      #!/bin/bash
-      PTP_STATUS_FILE="$PTP_STATUS_FOLDER/ptp_status"
-      test -d "$PTP_STATUS_FOLDER" || mkdir -p "$PTP_STATUS_FOLDER"
-
-      while true
-      do
-        socket=${PTP4L_SOCKET_PATH//<num>/0}
-        while read -r line
-        do
-          master=${line:2:1}
-          if [ "$master" == "*" ]; then
-            ptpnum=$(echo "$line" | cut -d',' -f3 -)
-            ptpnum=${ptpnum:3:1}
-            socket=${PTP4L_SOCKET_PATH//<num>/$ptpnum}
-            break
-          fi
-        done < <(chronyc -c sources)
-
-        echo "$socket" "$PTP_STATUS_FILE"
-
-        pmc -s "$socket" -b 0 -u "GET TIME_STATUS_NP" "GET PORT_DATA_SET" "GET PARENT_DATA_SET" > "$PTP_STATUS_FILE"
-
-        sleep 1
-      done
+  register: ptp_status_shell
 
 - name: Deploy the ptp status service
-  ansible.builtin.copy:
+  ansible.builtin.template:
     dest: /etc/systemd/system/ptp_status.service
-    mode: 0644
+    src: ptp_status.service.j2
+    mode: u=rw,g=r,o=r
     owner: root
     group: root
-    content: |
-      [Unit]
-      Description=PTP sync status service
-      After=network.target
-      StartLimitIntervalSec=0
-      [Service]
-      Type=simple
-      Restart=always
-      RestartSec=1
-      #User=root
-      Environment=PTP_STATUS_FOLDER=/home/libvirt-local/ptp/
-      Environment=PTP4L_SOCKET_PATH=/var/run/timemaster/ptp4l.0.socket
-      ExecStart=/usr/sbin/ptp_status.sh
-
-      [Install]
-      WantedBy=multi-user.target
+  register: ptp_status_service
 
 - name: Ensure the [ptp4l] section has the correct options value for autodetection
   ansible.builtin.lineinfile:
@@ -67,10 +30,19 @@
     regexp: "^options"
     line: "options -l 6 -A"
     insertafter: '^\[ptp4l\]$'
-  notify: Restart timemaster
+  register: timemaster_config
 
-- name: Enable PTP status service
-  ansible.builtin.service: name={{ item }} enabled=yes state=started
-  with_items:
-    - ptp_status
-  ignore_errors: true
+- name: Restart timemaster service
+  ansible.builtin.service:
+    name: timemaster
+    enabled: true
+    state: restarted
+  when: timemaster_config.changed
+
+- name: Restart PTP status service
+  ansible.builtin.service:
+    name: ptp_status
+    enabled: true
+    state: restarted
+  when: ptp_status_shell.changed or ptp_status_service.changed
+

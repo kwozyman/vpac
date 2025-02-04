@@ -3,3 +3,20 @@
   ansible.builtin.package: name={{ item }} state=present
   with_items:
     - intel-cmt-cat
+
+- name: Setup resctrl mount
+  ansible.builtin.template:
+    src: sys-fs-resctrl.mount
+    dest: /etc/systemd/system/sys-fs-resctrl.mount
+    owner: root
+    group: root
+    mode: o=rw,g=r,o=r
+  register: resctrlMount
+
+- name: mount resctrl
+  ansible.builtin.systemd:
+    name: sys-fs-resctrl.mount
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  when: resctrlMount.changed

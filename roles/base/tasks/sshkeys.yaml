@@ -1,10 +1,4 @@
 ---
-- name: Update root user password
-  ansible.builtin.user:
-    name: root
-    password: "{{ rootpassword }}"
-    append: yes
-
 - name: Set authorized keys for root
   ansible.posix.authorized_key:
     user: root

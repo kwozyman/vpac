@@ -63,7 +63,6 @@
     - make
     - wget
     - git
-    - mailutils
     - jq
     - mlocate
   ignore_errors: true

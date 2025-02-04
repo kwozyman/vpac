@@ -1,0 +1,26 @@
+[Unit]
+Description=Runs SSC600 related startup actions
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/sbin/ssc600-setup.sh
+StandardOutput=journal
+#User=root
+
+# Override the below using `systemctl edit ssc600-startup.service`
+# CPU cores to use for host system
+Environment=NON_RT_CORES={{ NON_RT_CORES_CAT|default("f", true) }}
+# L3 partition for the system
+Environment=NON_RT_CACHE={{ NON_RT_CACHE_CAT|default("0x1ff", true) }}
+# L3 partitioning for the SSC600 SW
+Environment=RT_CORES='{{ RT_CORES|default("13-14", true) }}'
+Environment=RT_CACHE={{ RT_CACHE|default("0xe00", true) }}
+# CPU core for the process bus(es)
+Environment=CPUMASK="{{ CPUMASK|default("400", true) }}"
+# Process bus interface(s)
+Environment=NICS="{{ NICS|default("enp4s0 enp5s0") }}"
+
+[Install]
+WantedBy=multi-user.target
