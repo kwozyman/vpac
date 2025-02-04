@@ -76,11 +76,17 @@
             value: "on"
           - name: iommu
             value: pt
+    NON_RT_CORES_CAT: f
+    NON_RT_CACHE_CAT: "0x1ff"
+    RT_CORES: 13-14
+    RT_CACHE: "0x600"
+    CPUMASK: "400"
+    NICS: "enp4s0 enp5s0"
 
   roles:
-#    - base
+    - base
     - vpac
-#    - network
-#    - linux-system-roles.bootloader
-#    - linux-system-roles.timesync
-#    - ssc600
+    - network
+    - linux-system-roles.bootloader
+    - linux-system-roles.timesync
+    - ssc600
