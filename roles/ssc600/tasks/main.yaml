@@ -3,3 +3,4 @@
   ansible.builtin.include_tasks: "{{ item }}"
   loop:
     - startup-service.yaml
+    - libvirt.yaml

@@ -1,0 +1,8 @@
+---
+- name: Write libvirt XML template
+  ansible.builtin.template:
+    src: libvirt-domain.xml.j2
+    dest: /home/libvirt-local/ssc600-1.xml
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
