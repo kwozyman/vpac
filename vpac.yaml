@@ -78,9 +78,9 @@
             value: pt
 
   roles:
-    - base
+#    - base
     - vpac
-    - network
-    - linux-system-roles.bootloader
-    - linux-system-roles.timesync
-    - ssc600
+#    - network
+#    - linux-system-roles.bootloader
+#    - linux-system-roles.timesync
+#    - ssc600
