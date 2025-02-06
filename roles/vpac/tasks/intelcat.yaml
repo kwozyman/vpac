@@ -1,6 +1,8 @@
 ---
 - name: Install helpful packages
-  ansible.builtin.package: name={{ item }} state=present
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
   with_items:
     - intel-cmt-cat
 
@@ -11,7 +13,7 @@
     owner: root
     group: root
     mode: o=rw,g=r,o=r
-  register: resctrlMount
+  register: resctrl_mount
 
 - name: mount resctrl
   ansible.builtin.systemd:
@@ -19,4 +21,4 @@
     state: restarted
     enabled: true
     daemon_reload: true
-  when: resctrlMount.changed
+  when: resctrl_mount.changed

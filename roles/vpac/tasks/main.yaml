@@ -6,5 +6,4 @@
     - kernelrt.yaml
     - ptp.yaml
     - services.yaml
-    - sysctl.yaml
     - virtualization.yaml

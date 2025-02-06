@@ -1,11 +1,4 @@
 ---
-- name: Install RHEL system roles packages
-  ansible.builtin.dnf:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - rhel-system-roles
-
 - name: Deploy the ptp status shell script
   ansible.builtin.template:
     dest: /usr/sbin/ptp_status.sh
@@ -45,4 +38,3 @@
     enabled: true
     state: restarted
   when: ptp_status_shell.changed or ptp_status_service.changed
-

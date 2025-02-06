@@ -1,15 +1,16 @@
 ---
 - name: Enable RT repo
-  ansible.builtin.shell: subscription-manager repos --enable rhel-9-for-x86_64-rt-rpms
-  ignore_errors: true
+  community.general.rhsm_repository:
+    name: rhel-9-for-x86_64-rt-rpms
+    state: enabled
 
 - name: Enable NFV repo
-  ansible.builtin.shell: subscription-manager repos --enable rhel-9-for-x86_64-nfv-rpms
-  ignore_errors: true
+  community.general.rhsm_repository:
+    name: rhel-9-for-x86_64-nfv-rpms
+    state: enabled
 
 - name: Install Kernel RT
   ansible.builtin.package: name={{ item }} state=present
   with_items:
     - kernel-rt
     - kernel-rt-kvm
-  ignore_errors: true

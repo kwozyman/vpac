@@ -38,6 +38,16 @@
 
     timesync_ntp_provider: chrony
 
+    kernel_settings_sysctl:
+      - name: vm.nr_hugepages
+        value: 13312
+      - name: kernel.nmi_watchdog
+        value: 0
+      - name: kernel.nmi_watchdog
+        value: 0
+      - name: kernel.sched_rt_runtime_us
+        value: -1
+    
     bootloader_settings:
       - kernel: ALL
         options:
@@ -86,10 +96,11 @@
     profile: latency-performance
 
   roles:
+    - linux-system-roles.bootloader
+    - linux-system-roles.kernel_settings
+    - linux-system-roles.timesync
+    - linux-system-roles.tuned
     - base
     - vpac
     - network
-    - linux-system-roles.bootloader
-    - linux-system-roles.timesync
-    - linux-system-roles.tuned
     - ssc600
