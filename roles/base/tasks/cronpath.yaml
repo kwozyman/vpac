@@ -1,5 +1,0 @@
----
-- name: Set PATH for crontab jobs
-  community.general.cronvar:
-    name: PATH
-    value: "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/root/go/bin"

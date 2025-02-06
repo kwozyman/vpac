@@ -1,6 +1,6 @@
 ---
-- name: Set the default target to multi-user.target (runlevel 3)
-  ansible.builtin.command: systemctl set-default multi-user.target
-
-- name: Ensure the multi-user.target is active
-  ansible.builtin.command: systemctl isolate multi-user.target
+- name: Change default target to multi-user
+  file:
+    src: /usr/lib/systemd/system/multi-user.target
+    dest: /etc/systemd/system/default.target
+    state: link

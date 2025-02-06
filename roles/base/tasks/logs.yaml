@@ -1,10 +1,10 @@
 ---
-- name: Install helpful packages
-  ansible.builtin.package: name={{ item }} state=present
+- name: Install logrotate package
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
   with_items:
     - logrotate
-
-  ignore_errors: true
 
 - name: Configure logrotate.conf
   ansible.builtin.lineinfile:
@@ -23,6 +23,9 @@
 - name: Limit Journal file size
   community.general.ini_file:
     path: /etc/systemd/journald.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
     section: Journal
     option: SystemMaxUse
     value: 200M

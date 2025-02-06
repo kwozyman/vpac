@@ -83,10 +83,13 @@
     CPUMASK: "400"
     NICS: "enp4s0 enp5s0"
 
+    profile: latency-performance
+
   roles:
     - base
     - vpac
     - network
     - linux-system-roles.bootloader
     - linux-system-roles.timesync
+    - linux-system-roles.tuned
     - ssc600

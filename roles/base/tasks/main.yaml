@@ -6,7 +6,6 @@
     - base.yaml
     - chrony.yaml
     - cleanup.yaml
-    - cronpath.yaml
     - dnf.yaml
     - logs.yaml
     - runlevel.yaml
