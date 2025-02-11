@@ -2,23 +2,16 @@
 
 FROM registry.redhat.io/rhel9/rhel-bootc:latest
 
-ARG EXTRA_RPM_PACKAGES='ansible'
-
-# Enable EPEL
-RUN dnf -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+ARG EXTRA_RPM_PACKAGES='ansible-core'
 
 RUN dnf autoremove -y
 
 RUN mv /etc/selinux /etc/selinux.tmp && \
   dnf install -y \
-  ${EXTRA_RPM_PACKAGES} \
   # && dnf -y upgrade \
   && dnf clean all \
   && mv /etc/selinux.tmp /etc/selinux \
   && ln -s ../cloud-init.target /usr/lib/systemd/system/default.target.wants # Enable cloud-init
-
-# Remove EPEL
-RUN dnf remove -y epel-release
 
 RUN mkdir -p /root/vpac/ || echo Exists
 
