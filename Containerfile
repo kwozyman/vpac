@@ -2,12 +2,12 @@
 
 FROM registry.redhat.io/rhel9/rhel-bootc:latest
 
-ARG EXTRA_RPM_PACKAGES='ansible-core'
+ARG EXTRA_RPM_PACKAGES="ansible-core"
 
 RUN dnf autoremove -y
 
 RUN mv /etc/selinux /etc/selinux.tmp && \
-  dnf install -y \
+  dnf install -y ${EXTRA_RPM_PACKAGES} \
   # && dnf -y upgrade \
   && dnf clean all \
   && mv /etc/selinux.tmp /etc/selinux \
