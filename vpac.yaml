@@ -91,7 +91,7 @@
     RT_CORES: 13-14
     RT_CACHE: "0x600"
     CPUMASK: "400"
-    NICS: "enp4s0 enp5s0"
+    NICS: "enp6s0 enp9s0"
 
     profile: latency-performance
 
