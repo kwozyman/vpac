@@ -99,7 +99,7 @@
     CPUMASK: "400"
     NICS: "enp6s0 enp9s0"
 
-    profile: latency-performance
+    profile: realtime-virtual-host
 
   roles:
     - linux-system-roles.bootloader
