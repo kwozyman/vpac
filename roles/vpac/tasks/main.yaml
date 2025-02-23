@@ -4,6 +4,5 @@
   loop:
     - intelcat.yaml
     - kernelrt.yaml
-    - ptp.yaml
     - services.yaml
     - virtualization.yaml

@@ -4,3 +4,4 @@
   loop:
     - startup-service.yaml
     - libvirt.yaml
+    - ptp.yaml
