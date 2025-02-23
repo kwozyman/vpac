@@ -21,7 +21,7 @@
   ansible.builtin.lineinfile:
     path: /etc/timemaster.conf
     regexp: "^options"
-    line: "options -l 6 -A"
+    line: "options -l 4 -A"
     insertafter: '^\[ptp4l\]$'
   register: timemaster_config
 
