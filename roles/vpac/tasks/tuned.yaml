@@ -1,0 +1,8 @@
+---
+- name: Setup isolated cores
+  ansible.builtin.template:
+    src: realtime-variables.conf.j2
+    dest: /etc/tuned/realtime-variables.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r

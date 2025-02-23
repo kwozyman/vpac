@@ -15,7 +15,7 @@ Environment=NON_RT_CORES={{ NON_RT_CORES_CAT|default("f", true) }}
 # L3 partition for the system
 Environment=NON_RT_CACHE={{ NON_RT_CACHE_CAT|default("0x1ff", true) }}
 # L3 partitioning for the SSC600 SW
-Environment=RT_CORES='{{ RT_CORES|default("13-14", true) }}'
+Environment=RT_CORES='{{ tuned.rt_cores }}'
 Environment=RT_CACHE={{ RT_CACHE|default("0xe00", true) }}
 # CPU core for the process bus(es)
 Environment=CPUMASK="{{ CPUMASK|default("400", true) }}"

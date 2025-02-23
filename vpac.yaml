@@ -53,23 +53,8 @@
         options:
           - name: quiet
             state: absent
-          - name: isolcpus
-            value: 12-21
-          - name: rcu_nocbs
-            value: 12-21
-          - name: irqaffinity
-            value: 8-11
-          - name: rcu_nocb_poll
-          - name: threadirqs
-          - name: skew_tick
-            value: 1
           - name: idle
             value: poll
-          - name: nohz
-            value: "on"
-          - name: nohz_full
-            value: 12-21
-          - name: noht
           - name: intel.max_cstate
             value: 0
           - name: intel_idle.max_cstate
@@ -94,7 +79,8 @@
             value: 0
     NON_RT_CORES_CAT: f
     NON_RT_CACHE_CAT: "0x1ff"
-    RT_CORES: 13-14
+    tuned:
+      rt_cores: 11-21
     RT_CACHE: "0x600"
     CPUMASK: "400"
     NICS: "enp6s0 enp9s0"
