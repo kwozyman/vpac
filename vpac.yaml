@@ -54,9 +54,9 @@
           - name: quiet
             state: absent
           - name: isolcpus
-            value: 12-22
+            value: 12-21
           - name: rcu_nocbs
-            value: 12-22
+            value: 12-21
           - name: irqaffinity
             value: 8-11
           - name: rcu_nocb_poll
@@ -67,6 +67,8 @@
             value: poll
           - name: nohz
             value: "on"
+          - name: nohz_full
+            value: 12-21
           - name: noht
           - name: intel.max_cstate
             value: 0
@@ -86,6 +88,10 @@
             value: "on"
           - name: iommu
             value: pt
+          - name: selinux
+            value: 0
+          - name: audit
+            value: 0
     NON_RT_CORES_CAT: f
     NON_RT_CACHE_CAT: "0x1ff"
     RT_CORES: 13-14
