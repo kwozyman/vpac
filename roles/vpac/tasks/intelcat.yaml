@@ -12,7 +12,7 @@
     dest: /etc/systemd/system/sys-fs-resctrl.mount
     owner: root
     group: root
-    mode: o=rw,g=r,o=r
+    mode: u=rw,g=r,o=r
   register: resctrl_mount
 
 - name: mount resctrl
