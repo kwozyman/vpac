@@ -28,12 +28,12 @@ set -e
 
 # Process bus / networking
 echo "Configuring network card interrupts and threads"
-#rmmod igb && modprobe igb EEE=0
 for nic in $NICS
 do
-#	ethtool --set-eee $nic eee off
-#	ethtool --change $nic wol d
-#	echo on > /sys/class/net/$nic/power/control
+	echo "Disabling NIC power management"
+	ethtool --set-eee $nic eee off
+	ethtool --change $nic wol d
+	echo on > /sys/class/net/$nic/power/control
 	IRQS=$(grep $nic /proc/interrupts | cut -d':' -f1)
 	for irq in $IRQS
 	do
