@@ -10,3 +10,9 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+
+- name: Disable irqbalance
+  ansible.builtin.service:
+    name: irqbalance
+    enabled: false
+    state: stopped
