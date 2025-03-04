@@ -5,6 +5,5 @@
     - network.yaml
     - intelcat.yaml
     - kernelrt.yaml
-    - services.yaml
     - virtualization.yaml
     - tuned.yaml
