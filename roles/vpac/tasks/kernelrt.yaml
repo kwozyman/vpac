@@ -10,7 +10,9 @@
     state: enabled
 
 - name: Install Kernel RT
-  ansible.builtin.package: name={{ item }} state=present
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
   with_items:
     - kernel-rt
     - kernel-rt-kvm

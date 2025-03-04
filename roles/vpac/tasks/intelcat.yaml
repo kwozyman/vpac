@@ -15,7 +15,7 @@
     mode: o=rw,g=r,o=r
   register: resctrl_mount
 
-- name: mount resctrl
+- name: Mount resctrl
   ansible.builtin.systemd:
     name: sys-fs-resctrl.mount
     state: restarted
