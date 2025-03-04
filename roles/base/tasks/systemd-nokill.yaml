@@ -1,7 +1,0 @@
----
-- name: Disable systemD kill of user processes
-  community.general.ini_file:
-    path: /etc/systemd/logind.conf
-    section: Login
-    option: KillUserProcesses
-    value: no

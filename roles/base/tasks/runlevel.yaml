@@ -1,6 +1,0 @@
----
-- name: Change default target to multi-user
-  file:
-    src: /usr/lib/systemd/system/multi-user.target
-    dest: /etc/systemd/system/default.target
-    state: link
