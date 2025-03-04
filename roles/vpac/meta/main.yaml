@@ -1,10 +1,10 @@
 galaxy_info:
-  author: Pablo Iranzo
+  author: Costin Gamenț
   description: VPAC Hypervisor specific
   license: GPL-2.0-or-later
-  min_ansible_version: 2.9
+  min_ansible_version: "2.9"
   platforms:
-    - name: Linux
+    - name: Red Hat
       versions:
-        - all modern versions
+        - all
   galaxy_tags: []
