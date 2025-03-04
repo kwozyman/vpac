@@ -24,6 +24,14 @@
     group: root
     mode: u=rw,g=r,o=r
 
+- name: Write virtual network XML template
+  ansible.builtin.template:
+    src: libvirt-network.xml.j2
+    dest: "{{ ssc600_vm.path }}/station-bus.xml"
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
 - name: Copy ABB clean disk
   ansible.builtin.copy:
     src: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img"
