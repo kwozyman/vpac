@@ -87,5 +87,4 @@
     - linux-system-roles.timesync
     - linux-system-roles.tuned
     - vpac
-    - network
     - ssc600
