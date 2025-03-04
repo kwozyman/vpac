@@ -9,10 +9,6 @@
     sshpassword: true
 
     kernel_settings_sysctl:
-      - name: vm.nr_hugepages
-        value: 13312
-      - name: kernel.nmi_watchdog
-        value: 0
       - name: kernel.nmi_watchdog
         value: 0
       - name: kernel.sched_rt_runtime_us
@@ -22,6 +18,8 @@
         options:
           - name: quiet
             state: absent
+          - name: default_hugepagesz
+            value: 1GB
           - name: idle
             value: poll
           - name: intel.max_cstate
@@ -46,6 +44,8 @@
             value: 0
           - name: audit
             value: 0
+          - name: ipv6.disable
+            value: 1
 
     profile: realtime-virtual-host
     rt_config:
