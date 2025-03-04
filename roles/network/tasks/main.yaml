@@ -1,18 +1,34 @@
 ---
-- name: Create bridge definition script for station
-  ansible.builtin.copy:
-    dest: /root/station-net.sh
-    mode: 0755
-    content: |
-      #!/bin/bash
+- name: Create station bridge
+  community.general.nmcli:
+    conn_name: station-bus
+    state: present
+    type: bridge
+    ifname: station-nic
+    ip4:
+      - '192.168.2.105/24'
+    gw4: 192.168.2.1
 
-      nmcli connection down enp6s0
+- name: Create station bridge nic
+  community.general.nmcli:
+    conn_name: station-ext
+    state: present
+    type: ethernet
+    slave_type: bridge
+    master: station-nic
+    ifname: "{{ vpac_network.station_nic }}"
 
-      nmcli connection add type bridge con-name station-bus ifname station-nic
-      nmcli connection modify station-bus ipv4.method manual ipv4.addresses '192.168.2.105/24' ipv4.gateway '192.168.2.1'
-      nmcli connection add type ethernet slave-type bridge con-name station-ext ifname enp6s0 master station-nic
-      nmcli connection up station-bus
-      nmcli connection up station-ext
+- name: Bring up station bridge
+  community.general.nmcli:
+    conn_name: station-bus
+    state: up
 
-- name: Execute bridge creation script for station
-  ansible.builtin.shell: /root/station-net.sh
+- name: Bring up station bridge nic
+  community.general.nmcli:
+    conn_name: station-ext
+    state: up
+
+- name: Bring down physical nic
+  community.general.nmcli:
+    conn_name: "{{ vpac_network.station_nic }}"
+    state: down
