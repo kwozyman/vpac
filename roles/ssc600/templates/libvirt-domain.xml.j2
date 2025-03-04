@@ -55,7 +55,7 @@
 	 <emulator>/usr/libexec/qemu-kvm</emulator>
     <disk type="file" device="disk">
       <driver name="qemu" type="raw" cache="none" io="threads"/>
-      <source file="/home/libvirt-local/ssc600_disk.img"/>
+      <source file="{{ ssc600_vm.path }}/{{ ssc600_vm.name }}.img"/>
       <target dev="vda" bus="virtio"/>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x05" function="0x0"/>
     </disk>

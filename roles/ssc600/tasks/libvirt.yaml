@@ -6,3 +6,33 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
+
+- name: Copy ABB clean disk
+  ansible.builtin.copy:
+    src: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img }}"
+    dest: "{{ ssc600_vm.path }}/{{ ssc600_vm.name }}.img"
+    owner: libvirt
+    group: libvirt
+    mode: u=rw,g=r,o=r
+  creates: "{{ ssc600_vm.path }}/{{ ssc600_vm.name }}.img"
+
+- name: Setup qemu hook
+  ansible.builtin.template:
+    src: qemu.hook
+    dest: /etc/qemu/hooks/qemu.hook
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
+- name: Setup virt network station-bus
+  community.libvirt.virt_net:
+    command: define
+    name: station-bus
+    xml: '{{ lookup("template", "libvirt-network.xml.j2") }}'
+    autostart: true
+
+- name: Define virt domain
+  community.libvirt.virt:
+    command: define
+    xml: "{{ lookup('template', 'libvirt-domain.xml.j2') }}"
+    autostart: true
