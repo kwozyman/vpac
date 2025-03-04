@@ -1,10 +1,4 @@
 ---
-- name: Install bridge-utils
-  ansible.builtin.package: name={{ item }} state=present
-  with_items:
-    - bridge-utils
-  ignore_errors: true
-
 - name: Create bridge definition script for station
   ansible.builtin.copy:
     dest: /root/station-net.sh
