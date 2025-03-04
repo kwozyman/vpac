@@ -11,16 +11,16 @@ StandardOutput=journal
 
 # Override the below using `systemctl edit ssc600-startup.service`
 # CPU cores to use for host system
-Environment=NON_RT_CORES={{ NON_RT_CORES_CAT|default("f", true) }}
+Environment=NON_RT_CORES={{ rt_config.non_rt_cores_cat }}
 # L3 partition for the system
-Environment=NON_RT_CACHE={{ NON_RT_CACHE_CAT|default("0x1ff", true) }}
+Environment=NON_RT_CACHE={{ rt_config.non_rt_cache_cat }}
 # L3 partitioning for the SSC600 SW
 Environment=RT_CORES='{{ tuned.rt_cores }}'
-Environment=RT_CACHE={{ RT_CACHE|default("0xe00", true) }}
+Environment=RT_CACHE={{ rt_config.rt_cache }}
 # CPU core for the process bus(es)
-Environment=CPUMASK="{{ CPUMASK|default("400", true) }}"
+Environment=CPUMASK="{{ rt_config.cpumask }}"
 # Process bus interface(s)
-Environment=NICS="{{ NICS|default("enp4s0 enp5s0") }}"
+Environment=NICS="{{ rt_config.nics }}"
 
 [Install]
 WantedBy=multi-user.target

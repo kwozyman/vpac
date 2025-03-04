@@ -6,7 +6,7 @@
     owner: root
     group: root
     mode: u=rwx,g=rx,o=rx
-  register: ssc600SetupScript
+  register: ssc600_setup_script
 
 - name: Deploy SSC-600 VM startup service
   ansible.builtin.template:
@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-  register: ssc600StartupService
+  register: ssc600_startup_service
 
 - name: Restart service
   ansible.builtin.systemd:
@@ -23,4 +23,4 @@
     state: restarted
     enabled: true
     daemon_reload: true
-  when: ssc600SetupScript.changed or ssc600StartupService.changed
+  when: ssc600_setup_script.changed or ssc600_startup_service.changed

@@ -20,15 +20,6 @@
     gitrepos: []
     os: redhat
 
-    timesync_ptp_domains:
-      - number: 0
-        interfaces: [enp9s0]
-        transport: L2
-
-    timesync_ntp_servers:
-      - hostname: 192.168.200.77
-        iburst: yes
-
     timesync_ntp_provider: chrony
 
     kernel_settings_sysctl:
@@ -40,7 +31,7 @@
         value: 0
       - name: kernel.sched_rt_runtime_us
         value: -1
-    
+
     bootloader_settings:
       - kernel: ALL
         options:
@@ -70,15 +61,41 @@
             value: 0
           - name: audit
             value: 0
-    NON_RT_CORES_CAT: f
-    NON_RT_CACHE_CAT: "0x1ff"
-    tuned:
+
+    rt_config:
+      non_rt_cores_cat: f
+      non_rt_cache_cat: "0x1ff"
+      rt_cache: "0x600"
       rt_cores: 11-21
-    RT_CACHE: "0x600"
-    CPUMASK: "400"
-    NICS: "enp6s0 enp9s0"
+      nics: "enp9s0"
+    tuned:
+      rt_cores: "{{ rt_config.rt_cores }}"
+
+    ssc600_ptp:
+      status_dir: /home/libvirt-local/ptp/
+      socket: /var/run/timemaster/ptp4l.0.socket
+    ssc600_vm:
+      name: ssc600-1
+      path: /home/libvirt-local/
+      core0: 15
+      core1: 14
+      core2: 13
+      core3: 12
+      core_qemu: 16-17
+      rt_nic: "enp9s0"
 
     profile: realtime-virtual-host
+
+    timesync_ptp_domains:
+      - number: 0
+        interfaces: "[ {{ rt_config.nics }}]"
+        transport: L2
+
+    timesync_ntp_servers:
+      - hostname: 192.168.200.77
+        # iburst: yes
+        iburst: true
+
 
   roles:
     - linux-system-roles.bootloader

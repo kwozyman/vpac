@@ -1,5 +1,5 @@
 <domain type="kvm">
-  <name>ssc600-1</name>
+  <name>{{ ssc600_vm.name }}</name>
   <memory unit="KiB">6291456</memory>
   <currentMemory unit="KiB">6291456</currentMemory>
   <memoryBacking>
@@ -10,11 +10,11 @@
   </memoryBacking>
   <vcpu placement="static">4</vcpu>
   <cputune>
-    <vcpupin vcpu="0" cpuset="15"/>
-    <vcpupin vcpu="1" cpuset="14"/>
-    <vcpupin vcpu="2" cpuset="13"/>
-    <vcpupin vcpu="3" cpuset="12"/>
-    <emulatorpin cpuset="11"/>
+    <vcpupin vcpu="0" cpuset="{{ ssc600_vm.core0 }}"/>
+    <vcpupin vcpu="1" cpuset="{{ ssc600_vm.core1 }}"/>
+    <vcpupin vcpu="2" cpuset="{{ ssc600_vm.core2 }}"/>
+    <vcpupin vcpu="3" cpuset="{{ ssc600_vm.core3 }}"/>
+    <emulatorpin cpuset="{{ ssc600_vm.core_qemu }}"/>
     <vcpusched vcpus="0" scheduler="fifo" priority="50"/>
     <vcpusched vcpus="1" scheduler="fifo" priority="50"/>
     <vcpusched vcpus="2" scheduler="fifo" priority="50"/>
@@ -66,7 +66,7 @@
     </controller>
     <filesystem type="mount">
       <driver type="virtiofs"/>
-      <source dir="/var/lib/libvirt/images/ptp"/>
+      <source dir="{{ ssc600_ptp.status_dir }}"/>
       <target dir="ptp"/>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x04" function="0x0"/>
     </filesystem>
@@ -77,7 +77,7 @@
       <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x0"/>
     </interface>
     <interface type='direct' trustGuestRxFilters='yes'>
-      <source dev='enp9s0' mode='vepa'/>
+      <source dev='{{ ssc600_vm.rt_nic }}' mode='vepa'/>
       <target dev='macvtap0'/>
       <model type='virtio'/>
       <alias name='net1'/>
