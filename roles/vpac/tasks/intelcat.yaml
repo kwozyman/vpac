@@ -1,10 +1,8 @@
 ---
 - name: Install helpful packages
   ansible.builtin.package:
-    name: "{{ item }}"
+    name: intel-cmt-cat
     state: present
-  with_items:
-    - intel-cmt-cat
 
 - name: Setup resctrl mount
   ansible.builtin.template:
