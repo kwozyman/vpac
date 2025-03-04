@@ -1,4 +1,13 @@
 ---
+- name: Install libvirt
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libvirt
+    - virt-install
+    - virt-viewer
+
 - name: Ensure libvirt directory exists
   ansible.builtin.file:
     path: "{{ ssc600_vm.path }}"
@@ -39,6 +48,12 @@
     owner: root
     group: root
     mode: u=rwx,g=rx,o=rx
+
+- name: Start libvirt service
+  ansible.builtin.service:
+    name: libvirtd
+    state: started
+    enabled: true
 
 - name: Setup virt network station-bus
   community.libvirt.virt_net:
