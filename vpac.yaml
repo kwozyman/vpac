@@ -6,6 +6,5 @@
     - linux-system-roles.bootloader
     - linux-system-roles.kernel_settings
     - linux-system-roles.timesync
-    - linux-system-roles.tuned
     - vpac
     - ssc600
