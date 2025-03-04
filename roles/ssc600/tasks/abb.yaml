@@ -1,17 +1,17 @@
 ---
-- name: Install unar
-  ansible.builtin.package:
-    name: unar
-    state: present
+#- name: Install unar
+#  ansible.builtin.package:
+#    name: unar
+#    state: present
 
-- name: Unpack ABB bundle
-  ansible.builtin.shell:
-    cmd: "unar {{ ssc600_bundle.path }}"
-    chdir: "{{ ssc600_bundle.extracted_path }}"
-    creates: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img.gz"
+#- name: Unpack ABB bundle
+#  ansible.builtin.shell:
+#    cmd: "unar {{ ssc600_bundle.path }}"
+#    chdir: "{{ ssc600_bundle.extracted_path }}"
+#    creates: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img.gz"
 
-- name: Unarchive disk image
-  ansible.builtin.unarchive:
-    src: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img.gz"
-    dest: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img"
-    remote_src: true
+#- name: Unarchive disk image
+#  ansible.builtin.unarchive:
+#    src: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img.gz"
+#    dest: "{{ ssc600_bundle.extracted_path }}/virtual_products/"
+#    remote_src: true
