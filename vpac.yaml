@@ -58,7 +58,7 @@
       non_rt_cache_cat: "0x1ff"
       rt_cache: "0x600"
       rt_cores: 11-21
-      nics: "enp9s0"
+      nic: "ens2f0"
     tuned:
       rt_cores: "{{ rt_config.rt_cores }}"
 
@@ -73,12 +73,12 @@
       core2: 13
       core3: 12
       core_qemu: 16-17
-      rt_nic: "enp9s0"
+      rt_nic: "{{ rt_config.nic }}"
 
     timesync_ntp_provider: chrony
     timesync_ptp_domains:
       - number: 0
-        interfaces: "[ {{ rt_config.nics }}]"
+        interfaces: "[ {{ rt_config.nic }}]"
         transport: L2
     timesync_ntp_servers:
       - hostname: 192.168.200.77
