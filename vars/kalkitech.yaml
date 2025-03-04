@@ -4,6 +4,7 @@ ansible_ssh_user: root
 sshpassword: true
 
 vpac_network:
+  station_nic: enp6s0
   ip4: "192.168.2.105/24"
   gw4: 192.168.2.1
   dns4: 8.8.8.8
