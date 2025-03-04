@@ -14,7 +14,6 @@
     owner: libvirt
     group: libvirt
     mode: u=rw,g=r,o=r
-  creates: "{{ ssc600_vm.path }}/{{ ssc600_vm.name }}.img"
 
 - name: Setup qemu hook
   ansible.builtin.template:

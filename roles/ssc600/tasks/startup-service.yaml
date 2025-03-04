@@ -17,10 +17,9 @@
     mode: u=rw,g=r,o=r
   register: ssc600_startup_service
 
-- name: Restart service
+- name: Enable service
   ansible.builtin.systemd:
     name: ssc600-startup
-    state: restarted
     enabled: true
     daemon_reload: true
   when: ssc600_setup_script.changed or ssc600_startup_service.changed
