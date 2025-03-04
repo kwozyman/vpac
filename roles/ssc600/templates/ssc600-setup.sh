@@ -37,11 +37,11 @@ do
 	IRQS=$(grep $nic /proc/interrupts | cut -d':' -f1)
 	for irq in $IRQS
 	do
-	echo $CPUMASK | sudo tee /proc/irq/$irq/smp_affinity
+	echo $CPUMASK | tee /proc/irq/$irq/smp_affinity
 	tasks=$(ps axo pid,command | grep -e "irq/$irq-" | grep -v grep | awk '{print $1}')
 	for pid in $tasks
 	do
-	  sudo taskset -p "0x$CPUMASK" $pid
+	  taskset -p "0x$CPUMASK" $pid
 	done
 	done
 done
