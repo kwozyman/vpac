@@ -81,7 +81,8 @@ ssc600_bundle:
 timesync_ntp_provider: chrony
 timesync_ptp_domains:
   - number: 0
-    interfaces: "[ {{ rt_config.nic }}]"
+    interfaces:
+      - "{{ rt_config.nic }}"
     transport: L2
 timesync_ntp_servers:
   - hostname: 192.168.200.77
