@@ -52,7 +52,6 @@
     - ansible
     - cronie
     - util-linux
-    - tuned
     - cmake
     - mc
     - pipx
@@ -75,9 +74,7 @@
     enabled: true
     state: started
   with_items:
-    - tuned
     - firewalld
-    # - fstrim.timer
 
 - name: Change root shell
   ansible.builtin.user:

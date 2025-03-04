@@ -1,4 +1,15 @@
 ---
+- name: Install helpful packages
+  ansible.builtin.package:
+    name: tuned
+    state: present
+
+- name: Enable tuned service
+  ansible.builtin.service:
+    name: tuned
+    enabled: true
+    state: started
+
 - name: Setup isolated cores
   ansible.builtin.template:
     src: realtime-variables.conf.j2

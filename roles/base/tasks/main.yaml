@@ -2,7 +2,6 @@
 - name: Include base tasks
   ansible.builtin.include_tasks: "{{ item }}"
   loop:
-    - 00_sshkeyscopy.yaml
     - base.yaml
     - chrony.yaml
     - cleanup.yaml
