@@ -9,7 +9,7 @@
 
 - name: Copy ABB clean disk
   ansible.builtin.copy:
-    src: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img }}"
+    src: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img"
     dest: "{{ ssc600_vm.path }}/{{ ssc600_vm.name }}.img"
     owner: libvirt
     group: libvirt
