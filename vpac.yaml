@@ -66,6 +66,7 @@
     ssc600_ptp:
       status_dir: /home/libvirt-local/ptp/
       socket: /var/run/timemaster/ptp4l.0.socket
+      ptp4l_options: "-l 5 -A --clientOnly=1 --step_threshold=0.1"
     ssc600_vm:
       name: ssc600-1
       path: /home/libvirt-local/
