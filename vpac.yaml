@@ -76,6 +76,9 @@
       core3: 12
       core_qemu: 16-17
       rt_nic: "{{ rt_config.nic }}"
+    ssc600_bundle:
+      path: /root/SSC600_SW_KVM-1.5.0.cab
+      extracted_path: /root
 
     timesync_ntp_provider: chrony
     timesync_ptp_domains:
