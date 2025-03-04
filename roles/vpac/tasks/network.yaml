@@ -25,3 +25,8 @@
   community.general.nmcli:
     conn_name: "{{ vpac_network.station_nic }}"
     autoconnect: false
+
+- name: Bring down RT nic
+  community.general.nmcli:
+    conn_name: "{{ rt_config.nic }}"
+    autoconnect: false
