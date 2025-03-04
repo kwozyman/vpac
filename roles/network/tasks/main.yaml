@@ -5,19 +5,6 @@
     - bridge-utils
   ignore_errors: true
 
-- name: Create bridge definition script for process
-  ansible.builtin.copy:
-    dest: /root/process-net.sh
-    mode: 0755
-    content: |
-      #!/bin/bash
-
-      nmcli connection add type bridge con-name process-bus ifname process-nic
-      nmcli connection modify process-bus ipv4.method manual ipv4.addresses '192.168.200.107/24'
-      nmcli connection add type ethernet slave-type bridge con-name process-ext ifname enp9s0 master process-nic
-      nmcli connection up process-bus
-      nmcli connection up process-ext
-
 - name: Create bridge definition script for station
   ansible.builtin.copy:
     dest: /root/station-net.sh
@@ -32,9 +19,6 @@
       nmcli connection add type ethernet slave-type bridge con-name station-ext ifname enp6s0 master station-nic
       nmcli connection up station-bus
       nmcli connection up station-ext
-
-- name: Execute bridge creation script for process
-  ansible.builtin.shell: /root/process-net.sh
 
 - name: Execute bridge creation script for station
   ansible.builtin.shell: /root/station-net.sh
