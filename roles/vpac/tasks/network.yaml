@@ -9,6 +9,7 @@
       - "{{ vpac_network.ip4 }}"
     gw4: "{{ vpac_network.gw4 }}"
     dns4: "{{ vpac_network.dns4 }}"
+    autoconnect: true
 
 - name: Create station bridge nic
   community.general.nmcli:
@@ -18,18 +19,9 @@
     slave_type: bridge
     master: station-nic
     ifname: "{{ vpac_network.station_nic }}"
-
-- name: Bring up station bridge
-  community.general.nmcli:
-    conn_name: station-bus
-    state: up
-
-- name: Bring up station bridge nic
-  community.general.nmcli:
-    conn_name: station-ext
-    state: up
+    autoconnect: true
 
 - name: Bring down physical nic
   community.general.nmcli:
     conn_name: "{{ vpac_network.station_nic }}"
-    state: down
+    autoconnect: false
