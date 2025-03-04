@@ -1,4 +1,12 @@
 ---
+- name: Ensure libvirt directory exists
+  ansible.builtin.file:
+    path: "{{ ssc600_vm.path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
+
 - name: Write libvirt XML template
   ansible.builtin.template:
     src: libvirt-domain.xml.j2
@@ -11,9 +19,18 @@
   ansible.builtin.copy:
     src: "{{ ssc600_bundle.extracted_path }}/virtual_products/ssc600_disk.img"
     dest: "{{ ssc600_vm.path }}/{{ ssc600_vm.name }}.img"
-    owner: libvirt
-    group: libvirt
+    owner: root
+    group: root
     mode: u=rw,g=r,o=r
+    remote_src: true
+
+- name: Ensure libvirt directory exists
+  ansible.builtin.file:
+    path: /etc/qemu/hooks
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
 
 - name: Setup qemu hook
   ansible.builtin.template:
@@ -21,7 +38,7 @@
     dest: /etc/qemu/hooks/qemu.hook
     owner: root
     group: root
-    mode: u=rw,g=r,o=r
+    mode: u=rwx,g=rx,o=rx
 
 - name: Setup virt network station-bus
   community.libvirt.virt_net:

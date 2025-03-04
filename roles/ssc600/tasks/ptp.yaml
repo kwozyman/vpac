@@ -1,4 +1,12 @@
 ---
+- name: Ensure ptp status directory exists
+  ansible.builtin.file:
+    path: "{{ ssc600_ptp.status_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: u=rwX,g=rX,o=rX
+
 - name: Deploy the ptp status shell script
   ansible.builtin.template:
     dest: /usr/sbin/ptp_status.sh
