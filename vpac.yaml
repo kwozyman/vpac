@@ -57,10 +57,11 @@
       non_rt_cores_cat: f
       non_rt_cache_cat: "0x1ff"
       rt_cache: "0x600"
-      rt_cores: 11-21
+      rt_cores: 12-15
+      cpumask: 20000
       nic: "ens2f0"
     tuned:
-      rt_cores: "{{ rt_config.rt_cores }}"
+      rt_cores: 11-21
 
     ssc600_ptp:
       status_dir: /home/libvirt-local/ptp/
