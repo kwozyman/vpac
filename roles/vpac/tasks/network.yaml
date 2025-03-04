@@ -6,8 +6,9 @@
     type: bridge
     ifname: station-nic
     ip4:
-      - '192.168.2.105/24'
-    gw4: 192.168.2.1
+      - "{{ vpac_network.ip4 }}"
+    gw4: "{{ vpac_network.gw4 }}"
+    dns4: "{{ vpac_network.dns4 }}"
 
 - name: Create station bridge nic
   community.general.nmcli:
