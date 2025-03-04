@@ -17,3 +17,4 @@
     - kernel-rt
     - kernel-rt-kvm
     - tuned-profiles-nfv-host
+    - realtime-tests
