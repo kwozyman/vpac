@@ -4,23 +4,9 @@
   user: root
 
   vars:
-    console_keymap: en
-    console_font: eurlatgr
-    system_locale: en_US.UTF-8
-    root_shell: /bin/bash
-    domain: "{{ ansible_nodename.split('.')[1:] | join('.') }}"
-    keys:
-      - key: "{{ sshkey }}"
-
-    system_timezone: Europe/Madrid
     ansible_connection: ssh
     ansible_ssh_user: root
     sshpassword: true
-
-    gitrepos: []
-    os: redhat
-
-    timesync_ntp_provider: chrony
 
     kernel_settings_sysctl:
       - name: vm.nr_hugepages
@@ -31,7 +17,6 @@
         value: 0
       - name: kernel.sched_rt_runtime_us
         value: -1
-
     bootloader_settings:
       - kernel: ALL
         options:
@@ -62,6 +47,7 @@
           - name: audit
             value: 0
 
+    profile: realtime-virtual-host
     rt_config:
       non_rt_cores_cat: f
       non_rt_cache_cat: "0x1ff"
@@ -84,13 +70,11 @@
       core_qemu: 16-17
       rt_nic: "enp9s0"
 
-    profile: realtime-virtual-host
-
+    timesync_ntp_provider: chrony
     timesync_ptp_domains:
       - number: 0
         interfaces: "[ {{ rt_config.nics }}]"
         transport: L2
-
     timesync_ntp_servers:
       - hostname: 192.168.200.77
         # iburst: yes
