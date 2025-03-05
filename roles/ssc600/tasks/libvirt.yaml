@@ -43,7 +43,7 @@
 
 - name: Ensure libvirt directory exists
   ansible.builtin.file:
-    path: /etc/qemu/hooks
+    path: /etc/libvirt/hooks
     state: directory
     owner: root
     group: root
@@ -52,7 +52,7 @@
 - name: Setup qemu hook
   ansible.builtin.template:
     src: qemu.hook
-    dest: /etc/qemu/hooks/qemu.hook
+    dest: /etc/libvirt/hooks/qemu
     owner: root
     group: root
     mode: u=rwx,g=rx,o=rx
