@@ -60,7 +60,7 @@
 - name: Start libvirt service
   ansible.builtin.service:
     name: libvirtd
-    state: started
+    state: restarted
     enabled: true
 
 - name: Setup virt network station-bus
