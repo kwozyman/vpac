@@ -6,6 +6,8 @@ set -x
 vm_name=$1
 vm_action=$2
 
+echo "qemu hook: name=${vm_name} action=${vm_action}"
+
 if ! [[ $vm_name == *ssc600* ]]; then
     exit 0
 fi
