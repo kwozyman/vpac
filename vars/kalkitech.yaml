@@ -52,11 +52,11 @@ bootloader_settings:
 
 profile: realtime-virtual-host
 rt_config:
-  non_rt_cores_cat: f
+  non_rt_cores_cat: 7ff
   non_rt_cache_cat: "0x1ff"
   rt_cache: "0x600"
   rt_cores: 12-15
-  cpumask: 20000
+  cpumask: 40000
   nic: "ens2f0"
 tuned:
   rt_cores: 11-21
