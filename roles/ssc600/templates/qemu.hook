@@ -28,7 +28,6 @@ case $vm_action in
         done
         count=0
         if [ -n "$qemu_pid" ]; then
-            echo "qemu pid is $qemu_pid"
             while [ -z "$vnet_pids" ]
             do
                 sleep 1
