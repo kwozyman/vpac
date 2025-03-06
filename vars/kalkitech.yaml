@@ -53,8 +53,8 @@ bootloader_settings:
 profile: realtime-virtual-host
 rt_config:
   non_rt_cores_cat: f
-  non_rt_cache_cat: "0x1ff"
-  rt_cache: "0x600"
+  non_rt_cache_cat: "0x600"
+  rt_cache: "0x1ff"
   rt_cores: 12-15
   cpumask: 40000
   nic: "ens2f0"
