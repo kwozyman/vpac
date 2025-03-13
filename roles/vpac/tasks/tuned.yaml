@@ -11,6 +11,14 @@
     group: root
     mode: u=rw,g=r,o=r
 
+- name: Setup isolated cores
+  ansible.builtin.template:
+    src: realtime-variables.conf.j2
+    dest: /etc/tuned/realtime-virtual-host-variables.conf
+    owner: root
+    group: root
+    mode: u=rw,g=r,o=r
+
 - name: Disable irqbalance
   ansible.builtin.service:
     name: irqbalance
