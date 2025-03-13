@@ -18,3 +18,6 @@
     - kernel-rt-kvm
     - tuned-profiles-nfv-host
     - realtime-tests
+
+- name: Set default kernel as RT
+  ansible.builtin.shell: grubby --set-default-index 0
