@@ -12,6 +12,7 @@ FLAKE8 := $(VENV_DIR)/bin/flake8
 deps:
 	dnf install -y ansible-core
 	ansible-galaxy collection install community.general
+	ansible-galaxy collection install community.libvirt
 	ansible-galaxy role install \
 		linux-system-roles.bootloader \
 		linux-system-roles.kernel_settings \
