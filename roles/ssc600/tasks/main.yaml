@@ -6,3 +6,4 @@
     - abb.yaml
     - libvirt.yaml
     - ptp.yaml
+    - modprobe.yaml
