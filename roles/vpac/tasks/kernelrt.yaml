@@ -18,6 +18,18 @@
     - kernel-rt-kvm
     - tuned-profiles-nfv-host
     - realtime-tests
+    - dnf-plugins-core
+    - python3-dnf-plugin-versionlock
 
 - name: Set default kernel as RT
   ansible.builtin.shell: grubby --set-default-index 0
+
+- name: Versionlock on kernel
+  community.general.dnf_versionlock:
+    name: kernel
+    state: present
+
+- name: UN-Versionlock on kernel-rt
+  community.general.dnf_versionlock:
+    name: kernel-rt
+    state: absent
