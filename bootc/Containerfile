@@ -1,6 +1,6 @@
 FROM registry.stage.redhat.io/rhel10/rhel-bootc:10.0
 
-ARG FIRSTBOOTPROFILE=realtime-virtual-host
+ARG FIRSTBOOTPROFILE=ssc600
 
 # prep for RHEL10 beta
 RUN sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/subscription-manager.conf
@@ -9,7 +9,13 @@ COPY redhat.repo /etc/yum.repos.d/redhat.repo
 # kernel-rt deploy
 RUN dnf remove -y kernel-{core,modules} && dnf install -y kernel-rt && dnf clean all
 
+# add tuned custom profile
+RUN mkdir -p /etc/tuned/ssc600
+COPY ssc600_tuned_profile/tuned.conf /etc/tuned/ssc600
+COPY ssc600_tuned_profile/ssc600-setup.sh /etc/tuned/ssc600
+
 # add firstboot systemd service
+RUN echo "FIRSTBOOTPROFILE=${FIRSTBOOTPROFILE}" > /etc/default/tuned-profile-firstboot
 COPY bootc-tuned-firstboot.service /etc/systemd/system/bootc-tuned-firstboot.service
 RUN systemctl enable bootc-tuned-firstboot.service
 
