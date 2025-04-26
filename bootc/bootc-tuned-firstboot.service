@@ -1,0 +1,16 @@
+[Unit]
+Description=Firstboot tuned profile configuration
+Requires=tuned.service
+After=tuned.service
+ConditionPathExists=/etc/default/tuned-profile-firstboot
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/default/tuned-profile-firstboot
+ExecStart=/usr/sbin/tuned-adm profile ${FIRSTBOOTPROFILE}
+ExecStartPost=rm /etc/default/tuned-profile-firstboot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+

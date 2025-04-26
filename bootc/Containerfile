@@ -1,0 +1,18 @@
+FROM registry.stage.redhat.io/rhel10/rhel-bootc:10.0
+
+ARG FIRSTBOOTPROFILE=realtime-virtual-host
+
+# prep for RHEL10 beta
+RUN sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/subscription-manager.conf
+COPY redhat.repo /etc/yum.repos.d/redhat.repo
+
+# kernel-rt deploy
+RUN dnf remove -y kernel-{core,modules} && dnf install -y kernel-rt && dnf clean all
+
+# add firstboot systemd service
+COPY bootc-tuned-firstboot.service /etc/systemd/system/bootc-tuned-firstboot.service
+RUN systemctl enable bootc-tuned-firstboot.service
+
+# checks and balances
+RUN bootc container lint
+
