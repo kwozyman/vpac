@@ -7,11 +7,11 @@ RUN sed -i 's/enabled=1/enabled=0/' /etc/yum/pluginconf.d/subscription-manager.c
 COPY redhat.repo /etc/yum.repos.d/redhat.repo
 
 # kernel-rt deploy
-RUN dnf remove -y kernel-{core,modules} && dnf install -y kernel-rt && dnf clean all
+RUN dnf remove -y kernel-{core,modules} && dnf install -y kernel-rt
 
 
 # various required packages
-RUN dnf install -y intel-cmt-cat libvirt libvirt-daemon qemu-kvm libvirt-client-qemu virt-install virt-viewer linuxptp
+RUN dnf install -y intel-cmt-cat libvirt libvirt-daemon qemu-kvm libvirt-client-qemu virt-install linuxptp && dnf clean all
 
 # add tuned custom profile
 RUN mkdir -p /etc/tuned/ssc600
