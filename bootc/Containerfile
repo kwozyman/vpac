@@ -23,5 +23,10 @@ RUN echo "FIRSTBOOTPROFILE=${FIRSTBOOTPROFILE}" > /etc/default/tuned-profile-fir
 COPY systemd/bootc-tuned-firstboot.service /etc/systemd/system/bootc-tuned-firstboot.service
 RUN systemctl enable bootc-tuned-firstboot.service
 
+# add PTP sync script and service
+COPY systemd/ptp_status.service /etc/systemd/system/ptp_status.service
+COPY scripts/ptp_status.sh /usr/sbin/ptp_status.sh
+RUN chmod 755 /usr/sbin/ptp_status.sh && systemctl enable ptp_status.service
+
 # checks and balances
 RUN bootc container lint
