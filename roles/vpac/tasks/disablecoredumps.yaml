@@ -1,0 +1,50 @@
+---
+- name: Set kernel.core_pattern to 'core' (or /dev/null to discard)
+  ansible.posix.sysctl:
+    name: kernel.core_pattern
+    value: "|/bin/false"
+    sysctl_set: true
+    state: present
+    reload: true
+
+- name: Disable core dumps via limits.conf
+  ansible.builtin.lineinfile:
+    path: /etc/security/limits.d/99-disable-coredump.conf
+    mode: "0644"
+    create: true
+    line: "{{ item }}"
+  loop:
+    - "* soft core 0"
+    - "* hard core 0"
+
+- name: Configure systemd-coredump to disable core dumps
+  community.general.ini_file:
+    path: /etc/systemd/coredump.conf
+    mode: "0644"
+    section: Coredump
+    option: Storage
+    value: none
+
+- name: Reload systemd configuration
+  ansible.builtin.systemd:
+    daemon_reexec: true
+
+- name: Ensure core dumps are disabled in pam_limits
+  ansible.builtin.lineinfile:
+    path: /etc/pam.d/common-session
+    mode: "0644"
+    line: "session required pam_limits.so"
+    create: true
+    state: present
+    insertafter: EOF
+  when: ansible_distribution != "RedHat" # Optional safety for other distros
+
+- name: Disable abrt service if it's there
+  ansible.builtin.service:
+    name: "{{ item }}"
+    enabled: false
+    state: stopped
+  with_items:
+    - abrt
+
+  ignore_errors: true
