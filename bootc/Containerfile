@@ -9,6 +9,10 @@ COPY redhat.repo /etc/yum.repos.d/redhat.repo
 # kernel-rt deploy
 RUN dnf remove -y kernel-{core,modules} && dnf install -y kernel-rt && dnf clean all
 
+
+# various required packages
+RUN dnf install -y intel-cmt-cat libvirt libvirt-daemon qemu-kvm libvirt-client-qemu virt-install virt-viewer linuxptp
+
 # add tuned custom profile
 RUN mkdir -p /etc/tuned/ssc600
 COPY ssc600_tuned_profile/tuned.conf /etc/tuned/ssc600
