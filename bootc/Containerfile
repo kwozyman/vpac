@@ -20,9 +20,8 @@ COPY ssc600_tuned_profile/ssc600-setup.sh /etc/tuned/ssc600
 
 # add firstboot systemd service
 RUN echo "FIRSTBOOTPROFILE=${FIRSTBOOTPROFILE}" > /etc/default/tuned-profile-firstboot
-COPY bootc-tuned-firstboot.service /etc/systemd/system/bootc-tuned-firstboot.service
+COPY systemd/bootc-tuned-firstboot.service /etc/systemd/system/bootc-tuned-firstboot.service
 RUN systemctl enable bootc-tuned-firstboot.service
 
 # checks and balances
 RUN bootc container lint
-
