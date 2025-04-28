@@ -26,8 +26,12 @@
 
 - name: Versionlock on kernel
   community.general.dnf_versionlock:
-    name: kernel
+    name: "{{ item }}"
     state: present
+  with_items:
+    - kernel
+    - kernel-core
+    - kernel-modules
 
 - name: UN-Versionlock on kernel-rt
   community.general.dnf_versionlock:
