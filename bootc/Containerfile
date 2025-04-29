@@ -9,7 +9,6 @@ COPY redhat.repo /etc/yum.repos.d/redhat.repo
 # kernel-rt deploy
 RUN dnf remove -y kernel-{core,modules} && dnf install -y kernel-rt
 
-
 # various required packages
 RUN dnf install -y intel-cmt-cat libvirt libvirt-daemon qemu-kvm libvirt-client-qemu virt-install linuxptp && dnf clean all
 
@@ -17,6 +16,7 @@ RUN dnf install -y intel-cmt-cat libvirt libvirt-daemon qemu-kvm libvirt-client-
 RUN mkdir -p /etc/tuned/ssc600
 COPY ssc600_tuned_profile/tuned.conf /etc/tuned/ssc600
 COPY ssc600_tuned_profile/ssc600-setup.sh /etc/tuned/ssc600
+RUN echo 'kargs = ["default_hugepagesz=1GB","idle=poll","intel.max_cstate=0","intel_idle.max_cstate=0","processor.max_cstate=0","processor_idle.max_cstate=0","intel_pstate=disable","rdt=cmt,l3cat,l3cdp,mba","iomem=relaxed","intel_iommu=on","iommu=pt","selinux=0","audit=0","ipv6.disable=0"]' > /usr/lib/bootc/kargs.d/00-abb.toml
 
 # add firstboot systemd service
 RUN echo "FIRSTBOOTPROFILE=${FIRSTBOOTPROFILE}" > /etc/default/tuned-profile-firstboot
