@@ -7,4 +7,5 @@
     - kernelrt.yaml
     - virtualization.yaml
     - tuned.yaml
-    - disablecoredumps.yaml
+#    - disablecoredumps.yaml
+
