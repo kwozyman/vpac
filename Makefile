@@ -21,7 +21,7 @@ deps:
 
 # run locally, against variable file ${PROFILE}
 local:
-	stat $(PROFILE) && ansible-playbook -i localhost, --connection local vpac.yaml -e@$(PROFILE)
+	stat $(PROFILE) && ansible-playbook -i localhost, --connection local vpac.yaml -e@$(PROFILE) --ask-pass
 
 # Create virtual environment
 $(VENV_DIR):
