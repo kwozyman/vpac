@@ -7,8 +7,8 @@ Type=simple
 Restart=always
 RestartSec=1
 EnvironmentFile=/etc/default/ssc600
-Environment=PTP_STATUS_FOLDER=/home/libvirt-local/ptp/
-nvironment=PTP4L_SOCKET_PATH=/var/run/timemaster/ptp4l.0.socket
+Environment=PTP_STATUS_FOLDER=/var/ptp/
+Environment=PTP4L_SOCKET_PATH=/var/run/timemaster/ptp4l.0.socket
 ExecStart=/usr/sbin/ptp_status.sh
 
 [Install]

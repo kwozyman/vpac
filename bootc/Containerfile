@@ -22,7 +22,7 @@ RUN systemctl enable bootc-tuned-firstboot.service
 # add PTP sync script and service
 COPY systemd/ptp_status.service /etc/systemd/system/ptp_status.service
 COPY scripts/ptp_status.sh /usr/sbin/ptp_status.sh
-RUN chmod 755 /usr/sbin/ptp_status.sh && systemctl enable ptp_status.service
+RUN chmod 755 /usr/sbin/ptp_status.sh && systemctl enable ptp_status.service && mkdir -p /var/ptp
 
 # qemu hook
 RUN mkdir -p /etc/libvirt/hooks/qemu
