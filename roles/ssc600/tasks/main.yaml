@@ -1,9 +1,0 @@
----
-- name: Include tasks
-  ansible.builtin.include_tasks: "{{ item }}"
-  loop:
-    - startup-service.yaml
-    - abb.yaml
-    - libvirt.yaml
-    - ptp.yaml
-    - modprobe.yaml
