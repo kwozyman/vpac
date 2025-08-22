@@ -32,11 +32,13 @@ unentitle-host:
 	sudo subscription-manager repos --disable rhel-10-for-x86_64-nfv-rpms
 
 build-iso:
+	mkdir -p iso/
 	sudo $(PODMAN) run --rm -it --privileged --pull=newer --security-opt label=type:unconfined_t \
 		--volume $(PWD)/iso-config.toml:/config.toml:ro \
 		--volume /var/lib/containers/storage:/var/lib/containers/storage \
 		--volume $(PWD)/iso:/output \
 		$(BIB_CONTAINER_IMAGE) \
 			--type iso $(BASE_CONTAINER_IMAGE)
+	@echo Generated file in iso/bootiso/install.iso
 
 .PHONY: container-base container-base-push entitle-host unentitle-host build-iso
