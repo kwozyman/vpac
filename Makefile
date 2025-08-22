@@ -1,60 +1,33 @@
-# Define variables
-SHELL := /bin/bash
-VENV_DIR := .venv
-PYTHON := $(VENV_DIR)/bin/python
-PIP := $(VENV_DIR)/bin/pip
-ANSIBLE_LINT := $(VENV_DIR)/bin/ansible-lint
-PYTEST := $(VENV_DIR)/bin/pytest
-BLACK := $(VENV_DIR)/bin/black
-FLAKE8 := $(VENV_DIR)/bin/flake8
+PODMAN ?= /usr/bin/podman
+PODMAN_ARGS ?= 
+BASE_CONTAINER_IMAGE ?= quay.io/cgament/vpac:base
 
-# Install os dependencies
-deps:
-	dnf install -y ansible-core
-	ansible-galaxy collection install community.general
-	ansible-galaxy collection install community.libvirt
-	ansible-galaxy role install \
-		linux-system-roles.bootloader \
-		linux-system-roles.kernel_settings \
-		linux-system-roles.timesync \
-		linux-system-roles.tuned
+default: help
 
-# run locally, against variable file ${PROFILE}
-local:
-	stat $(PROFILE) && ansible-playbook -i localhost, --connection local vpac.yaml -e@$(PROFILE)
+help:
+	@echo "Make system for Red Hat VPAC"
+	@echo "Available targets:"
+	@echo "  * help: show this help text"
+	@echo "  * container-base: build base container"
+	@echo "  * container-base-push: push base container to registry"
+	@echo "  * entitle-host: add required Red Hat entitlements to the build host"
+	@echo "  * unentitle-host: remove required Red Hat entitlements from the build host"
 
-# Create virtual environment
-$(VENV_DIR):
-	python3 -m venv $(VENV_DIR)
+container-base:
+	sudo podman build --file container-images/base/Containerfile \
+		--volume /etc/yum.repos.d/:/etc/yum.repos.d/:ro,z --volume /etc/pki/entitlement/:/etc/pki/entitlement/:ro,z \
+		--tag $(BASE_CONTAINER_IMAGE)
 
-# install Python dependencies
-python-deps: $(VENV_DIR)
-	$(PIP) install -r requirements.txt
-	$(PIP) install -r test-requirements.txt
+container-base-push:
+	podman push $(BASE_CONTAINER_IMAGE)
 
-# Run tests
-test: $(VENV_DIR)
-	$(PYTEST) tests/
+entitle-host:
+	sudo subscription-manager repos --enable rhel-10-for-x86_64-rt-rpms
+	sudo subscription-manager repos --enable rhel-10-for-x86_64-nfv-rpms
 
-# Lint code
-lint: $(VENV_DIR)
-	$(FLAKE8) $(MODULE_NAME) tests/
-	$(BLACK) --check $(MODULE_NAME) tests/
+unentitle-host:
+	sudo subscription-manager repos --disable rhel-10-for-x86_64-rt-rpms
+	sudo subscription-manager repos --disable rhel-10-for-x86_64-nfv-rpms
 
-# Format code
-format: $(VENV_DIR)
-	$(BLACK) $(MODULE_NAME) tests/
 
-# Run Ansible lint
-ansible-lint: $(VENV_DIR)
-	$(ANSIBLE_LINT) .
-
-# package collection
-package: $(VENV_DIR)
-	ansible-galaxy collection build
-
-# Clean up
-clean:
-	rm -rf $(VENV_DIR) .pytest_cache .mypy_cache
-
-.PHONY: all install test lint format ansible-lint clean deps
+.PHONY: container-base container-base-push entitle-host unentitle-host
