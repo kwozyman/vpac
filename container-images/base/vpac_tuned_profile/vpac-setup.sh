@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-# include generic tuned functions
-. /usr/lib/tuned/functions
+om a:message# include generic tuned functions
+. /usr/lib/tiuned/functions
 
 # include VPAC specific variables
 if [[ -f /etc/default/vpac ]]; then
@@ -21,17 +21,17 @@ process_bus() {
 	for nic in $NICS
 	do
 		echo "Disabling NIC power management"
-		ethtool --set-eee $nic eee off || echo EEE failed or not supported
-		ethtool --change $nic wol d
-		echo on > /sys/class/net/$nic/power/control
-		IRQS=$(grep $nic /proc/interrupts | cut -d':' -f1)
+		ethtool --set-eee "${nic}" eee off || echo EEE failed or not supported
+		ethtool --change "${nic}" wol d
+		echo on > "/sys/class/net/${nic}/power/control"
+		IRQS=$(grep "${nic}" /proc/interrupts | cut -d':' -f1)
 		for irq in $IRQS
 		do
-		echo $CPUMASK | tee /proc/irq/$irq/smp_affinity
-		tasks=$(ps axo pid,command | grep -e "irq/$irq-" | grep -v grep | awk '{print $1}')
+		echo "${CPUMASK}" | tee "/proc/irq/${irq}/smp_affinity"
+		tasks=$(ps axo pid,command | grep -e "irq/${irq}-" | grep -v grep | awk '{print $1}')
 		for pid in $tasks
 		do
-		 taskset -p "0x$CPUMASK" $pid
+		 taskset -p "0x$CPUMASK" "${pid}"
 		done
 		done
 	done
@@ -49,5 +49,4 @@ stop() {
     return 0
 }
 
-process $@
-
+process "$@"
