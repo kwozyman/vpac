@@ -23,6 +23,7 @@ RUN systemctl enable bootc-tuned-firstboot.service
 COPY systemd/vpac-ptp-status.service /etc/systemd/system/vpac-ptp-status.service
 COPY scripts/vpac-ptp-status.sh /usr/sbin/vpac-ptp-status.sh
 RUN chmod 755 /usr/sbin/vpac-ptp-status.sh && systemctl enable vpac-ptp-status.service && mkdir -p /var/ptp
+COPY etc/timemaster.conf /etc/timemaster.conf
 
 # qemu hook
 RUN mkdir -p /etc/libvirt/hooks/qemu
