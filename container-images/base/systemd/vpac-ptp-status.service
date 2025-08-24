@@ -9,7 +9,7 @@ RestartSec=1
 EnvironmentFile=/etc/default/vpac
 Environment=PTP_STATUS_FOLDER=/var/ptp/
 Environment=PTP4L_SOCKET_PATH=/var/run/timemaster/ptp4l.0.socket
-ExecStart=/usr/sbin/ptp_status.sh
+ExecStart=/usr/sbin/vpac-ptp-status.sh
 
 [Install]
 WantedBy=multi-user.target
