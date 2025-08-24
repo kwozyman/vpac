@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 om a:message# include generic tuned functions
-. /usr/lib/tiuned/functions
+. /usr/lib/tuned/functions
 
 # include VPAC specific variables
 if [[ -f /etc/default/vpac ]]; then
