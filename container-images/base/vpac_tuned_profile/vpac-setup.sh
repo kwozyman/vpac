@@ -3,9 +3,9 @@
 # include generic tuned functions
 . /usr/lib/tuned/functions
 
-# include SSC600 specific variables
-if [[ -f /etc/default/ssc600 ]]; then
-	. /etc/default/ssc600
+# include VPAC specific variables
+if [[ -f /etc/default/vpac ]]; then
+	. /etc/default/vpac
 else
 	return 1
 fi
