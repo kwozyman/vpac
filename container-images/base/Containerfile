@@ -30,6 +30,9 @@ RUN mkdir -p /etc/libvirt/hooks/qemu
 COPY scripts/qemu.hook /etc/libvirt/hooks/qemu/qemu.hook
 RUN chmod 755 /etc/libvirt/hooks/qemu/qemu.hook
 
+# disable irqbalance
+RUN systemctl disable irqbalance
+
 # checks and balances
 RUN bootc container lint
 
